@@ -19,6 +19,9 @@
 			{
 				"command": "flutter-matic.helloWorld",
 				"title": "Install Flutter"
+			},{
+				"command": "flutter-matic.dashboard",
+				"title": "Dashboard"
 			}
 		]
 	},

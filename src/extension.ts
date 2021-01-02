@@ -1,10 +1,7 @@
 import * as vscode from "vscode";
 
-import { exec as execCall, ExecException } from "child_process";
-import { promisify } from "util";
 import { homedir } from "os";
 import { join } from "path";
-import { cwd } from "process";
 import { EXTENSION_ID } from "./constants";
 import { checkForGit } from "./dependencies/checkForGit";
 import { error, info } from "./logger";
@@ -15,11 +12,9 @@ import {
   installFlutter,
 } from "./installer/installFlutter";
 import { createInstallationDirectory } from "./createDirectory";
-import { createBrotliDecompress } from "zlib";
+import { dashboardCommand } from "./commands/DashboardCommand";
 
-const exec = promisify(execCall);
-
-export function activate(context: vscode.ExtensionContext) {
+export async function activate(context: vscode.ExtensionContext) {
   console.log(
     'Congratulations, your extension "flutter-matic-auto-install" is now active!'
   );
@@ -96,6 +91,7 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(installFlutterCommand);
+  context.subscriptions.push(await dashboardCommand(context));
 }
 
 export function deactivate() {}

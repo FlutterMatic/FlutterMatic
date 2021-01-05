@@ -23,6 +23,10 @@
 				"command": "flutter-matic.dashboard",
 				"title": "Dashboard"
 			}
+			,{
+				"command": "flutter-matic.create-flutter-web-app",
+				"title": "Create web app"
+			}
 		]
 	},
 	"scripts": {

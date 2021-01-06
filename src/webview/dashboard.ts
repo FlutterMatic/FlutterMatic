@@ -3,9 +3,11 @@ import { Output } from "../Output";
 
 export class DashboardContent {
   styleUri: Uri;
+  scriptUri: Uri;
 
-  constructor(styleUri: Uri) {
+  constructor(styleUri: Uri,scriptUri:Uri) {
     this.styleUri = styleUri;
+    this.scriptUri = scriptUri
   }
 
   getDashboardContent(outputs: Output[]) {
@@ -20,6 +22,7 @@ export class DashboardContent {
     return `
     <html>
     <link rel="stylesheet" href="${this.styleUri}"
+    <script src="${this.scriptUri}" />
     <h1>Dashboard</h1>
     <button id="install-flutter">Install flutter</button>
     <button id="create-web">Create web app</button>

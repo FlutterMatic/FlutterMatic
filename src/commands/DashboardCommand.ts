@@ -26,9 +26,9 @@ class DashboardCommandHandler {
   outputList: Output[] = [];
   webViewPanel: WebviewPanel;
   dashboardContent: DashboardContent;
-  constructor(panel: WebviewPanel, styleURI: Uri) {
+  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri) {
     this.webViewPanel = panel;
-    this.dashboardContent = new DashboardContent(styleURI);
+    this.dashboardContent = new DashboardContent(styleURI, scriptURI);
   }
 
   updateOutputList(output: Output) {
@@ -37,6 +37,15 @@ class DashboardCommandHandler {
       this.outputList
     );
   }
+}
+function getScriptURI(context: ExtensionContext, panel: WebviewPanel) {
+  const jsScriptPath = Uri.joinPath(
+    context.extensionUri,
+    "src",
+    "media",
+    "main.js"
+  );
+  return panel.webview.asWebviewUri(jsScriptPath);
 }
 function getStyleURI(context: ExtensionContext, panel: WebviewPanel) {
   const stylesPath = Uri.joinPath(
@@ -53,13 +62,35 @@ export async function dashboardCommand(context: ExtensionContext) {
     const panel = window.createWebviewPanel(
       "dashboard",
       "Dashboard",
-      ViewColumn.One
+      ViewColumn.One,
+      {
+        enableScripts: true,
+      }
+    );
+
+    panel.webview.onDidReceiveMessage(
+      async (message) => {
+        switch (message.command) {
+          case "install-flutter":
+            commands.executeCommand(`${EXTENSION_ID}.helloWorld`);
+            break;
+
+          case "create-web-app":
+            commands.executeCommand(`${EXTENSION_ID}.create-flutter-web-app`);
+            break;
+        }
+      },
+      undefined,
+      context.subscriptions
     );
 
     const styleURI = getStyleURI(context, panel);
+    const scriptURI = getScriptURI(context, panel);
+
     const dashboardCommandHandler = new DashboardCommandHandler(
       panel,
-      styleURI
+      styleURI,
+      scriptURI
     );
 
     dashboardCommandHandler.updateOutputList({

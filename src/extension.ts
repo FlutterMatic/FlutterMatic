@@ -90,7 +90,14 @@ export async function activate(context: vscode.ExtensionContext) {
     }
   );
 
+  const createFlutterWebApp=vscode.commands.registerCommand(`${EXTENSION_ID}.create-flutter-web-app`,()=>{
+      info('Feature not added yet. Comming soon');
+  });
+
+
+
   context.subscriptions.push(installFlutterCommand);
+  context.subscriptions.push(createFlutterWebApp);
   context.subscriptions.push(await dashboardCommand(context));
 }
 

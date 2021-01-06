@@ -1,11 +1,13 @@
-import { window } from "vscode";
+import { Output } from "./Output";
 
-export function error(msg: string) {
+export function error(msg: string):Output{
   console.error(msg);
-  window.showErrorMessage(msg);
+//  window.showErrorMessage(msg);
+  return {success:false,error:msg}
 }
 
-export function info(msg: string) {
+export function info(msg: string):Output {
   console.log(msg);
-  window.showInformationMessage(msg);
+  //window.showInformationMessage(msg);
+  return {success:true,info:msg}
 }

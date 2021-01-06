@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, Uri, ViewColumn, window} from "vscode";
+import { commands, ExtensionContext, Uri, ViewColumn, window } from "vscode";
 import { EXTENSION_ID } from "../constants";
 
 import { getDashboardContent } from "../webview/dashboard";
@@ -22,19 +22,27 @@ export async function dashboardCommand(context: ExtensionContext) {
       "vscode.css"
     );
 
-      panel.webview.onDidReceiveMessage(async (message)=>{
-        switch(message.command){
-          case 'install-flutter':
-            commands.executeCommand(`${EXTENSION_ID}.helloWorld`);
-            break;
-            
-            case 'create-web-app':
-              commands.executeCommand(`${EXTENSION_ID}.create-flutter-web-app`);
-              break;
-        }
-      },undefined,context.subscriptions);
+    const jsScrpitPath = Uri.joinPath(
+      context.extensionUri,
+      "src",
+      "media",
+      "main.js"
+    );
+
+    panel.webview.onDidReceiveMessage(async (message) => {
+      switch (message.command) {
+        case 'install-flutter':
+          commands.executeCommand(`${EXTENSION_ID}.helloWorld`);
+          break;
+
+        case 'create-web-app':
+          commands.executeCommand(`${EXTENSION_ID}.create-flutter-web-app`);
+          break;
+      }
+    }, undefined, context.subscriptions);
 
     const styleURI = panel.webview.asWebviewUri(stylesPath);
-    panel.webview.html = await getDashboardContent(styleURI);
+    const scrpitURI = panel.webview.asWebviewUri(jsScrpitPath);
+    panel.webview.html = await getDashboardContent(styleURI, scrpitURI);
   });
 }

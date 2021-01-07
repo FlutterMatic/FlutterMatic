@@ -1,19 +1,20 @@
-//Vscode extension
-const vscode = acquireVsCodeApi();
+function main() {
+  const vscode = acquireVsCodeApi();
 
-const installFlutterBtn = document.querySelector('#install-flutter');
-const createWebAppBtn = document.querySelector('#create-web');
+  const installFlutterBtn = document.getElementById("install-flutter");
+  const createWebAppBtn = document.getElementById("create-web");
 
-//addListener
-installFlutterBtn.addEventListener('click', () => {
-    console.log('dd');
+  installFlutterBtn.addEventListener("click", () => {
     vscode.postMessage({
-        command: 'install-flutter'
+      command: "install-flutter",
     });
-});
+  });
 
-createWebAppBtn.addEventListener('click', () => {
+  createWebAppBtn.addEventListener("click", () => {
     vscode.postMessage({
-        command: 'create-web-app'
+      command: "create-web-app",
     });
-});
+  });
+}
+
+main();

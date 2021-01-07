@@ -70,6 +70,7 @@ export async function dashboardCommand(context: ExtensionContext) {
 
     panel.webview.onDidReceiveMessage(
       async (message) => {
+        // TODO Refactor required
         switch (message.command) {
           case "install-flutter":
             commands.executeCommand(`${EXTENSION_ID}.helloWorld`);

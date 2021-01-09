@@ -11,7 +11,7 @@ import { Output } from "../Output";
 
 import { DashboardContent } from "../webview/dashboard";
 import { InstallFlutterCommand } from "./InstallFlutterCommand";
-
+import { CreateFlutterWebProjectCommand } from "./CreateFlutterWebProjectCOmmand";
 export class DashboardCommandHandler {
   outputList: Output[] = [];
   webViewPanel: WebviewPanel;
@@ -69,7 +69,9 @@ export async function dashboardCommand(context: ExtensionContext) {
             break;
 
           case "create-web-app":
-            commands.executeCommand(`${EXTENSION_ID}.create-flutter-web-app`);
+            await new CreateFlutterWebProjectCommand(
+              dashboardCommandHandler
+            ).run();
             break;
         }
       },

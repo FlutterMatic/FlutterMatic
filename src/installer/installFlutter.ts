@@ -7,13 +7,11 @@ import { exec } from "../runCommand";
 export async function gitClone(): Promise<Output> {
   try {
     if (process.platform === "win32") {
-      const tarFLutterSDK = await download('https://github.com/flutter/flutter.git#beta');
-      await extract(tarFLutterSDK, join(
-        homedir(),
-        ".flutter-sdktest"
-      ));
-    }
-    else {
+      const tarFLutterSDK = await download(
+        "https://github.com/flutter/flutter.git#beta"
+      );
+      await extract(tarFLutterSDK, join(homedir(), ".flutter-sdktest"));
+    } else {
       await exec(
         `git clone --depth 1 --branch beta https://github.com/flutter/flutter.git ${join(
           homedir(),
@@ -50,6 +48,22 @@ export async function configureFlutter(): Promise<Output> {
       )} config --enable-web`
     );
     return { success: true, info: "Flutter configuration complete!" };
+  } catch (e: any) {
+    return { success: false, error: e.message };
+  }
+}
+
+export async function createFlutterWebApp(
+  path: string,
+  name = "flutter_matic_starter_project"
+): Promise<Output> {
+  try {
+    await exec(
+      `${join(homedir(), ".flutter-sdktest", "bin", "flutter")} create ${name}`,
+      { cwd: path }
+    );
+
+    return { success: true, info: "Flutter WebApp created\n" };
   } catch (e: any) {
     return { success: false, error: e.message };
   }

@@ -1,5 +1,6 @@
 import { homedir } from "os";
 import { join } from "path";
+
 import { createInstallationDirectory } from "../createDirectory";
 import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
 import { checkForGit } from "../dependencies/checkForGit";
@@ -109,6 +110,7 @@ export class InstallFlutterCommand {
         )} create starter_web`
       )
     );
+
     this.dashboardCommandHandler.updateOutputList(
       info(
         `2. Copy this (after cd command):

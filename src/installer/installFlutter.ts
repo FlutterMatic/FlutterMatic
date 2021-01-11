@@ -31,6 +31,7 @@ export async function gitClone(): Promise<Output> {
 export async function installFlutter(): Promise<Output> {
   try {
     //Added path in the user variable(windows)
+    // Refactor to triple eq
     if (process.platform == 'win32') {
       await exec(`SETX PATH "${join(homedir(), ".flutter-sdktest", "bin")}"`);
       exec('flutter doctor'); //Important for initialisation of flutter

@@ -1,7 +1,8 @@
+import * as vscode from "vscode";
+
+import { createFlutterWebApp } from "../installer/installFlutter";
 import { DashboardCommandHandler } from "./DashboardCommand";
 
-import * as vscode from "vscode";
-import { createFlutterWebApp } from "../installer/installFlutter";
 export class CreateFlutterWebProjectCommand {
   dashboardCommandHandler: DashboardCommandHandler;
   constructor(dashboardCommandHandler: DashboardCommandHandler) {

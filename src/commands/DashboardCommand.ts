@@ -6,16 +6,19 @@ import {
   WebviewPanel,
   window,
 } from "vscode";
+
 import { EXTENSION_ID } from "../constants";
 import { Output } from "../Output";
 
 import { DashboardContent } from "../webview/dashboard";
 import { InstallFlutterCommand } from "./InstallFlutterCommand";
 import { CreateFlutterWebProjectCommand } from "./CreateFlutterWebProjectCOmmand";
+
 export class DashboardCommandHandler {
   outputList: Output[] = [];
   webViewPanel: WebviewPanel;
   dashboardContent: DashboardContent;
+
   constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri) {
     this.webViewPanel = panel;
     this.dashboardContent = new DashboardContent(styleURI, scriptURI);
@@ -31,6 +34,7 @@ export class DashboardCommandHandler {
     );
   }
 }
+
 function getScriptURI(context: ExtensionContext, panel: WebviewPanel) {
   const jsScriptPath = Uri.joinPath(
     context.extensionUri,
@@ -40,6 +44,7 @@ function getScriptURI(context: ExtensionContext, panel: WebviewPanel) {
   );
   return panel.webview.asWebviewUri(jsScriptPath);
 }
+
 function getStyleURI(context: ExtensionContext, panel: WebviewPanel) {
   const stylesPath = Uri.joinPath(
     context.extensionUri,
@@ -50,13 +55,13 @@ function getStyleURI(context: ExtensionContext, panel: WebviewPanel) {
   const styleURI = panel.webview.asWebviewUri(stylesPath);
   return styleURI;
 }
+
 export async function dashboardCommand(context: ExtensionContext) {
   return commands.registerCommand(`${EXTENSION_ID}.dashboard`, async () => {
     const panel = window.createWebviewPanel(
       "dashboard",
       "Dashboard",
-      ViewColumn.One,
-      {
+      ViewColumn.One, {
         enableScripts: true,
       }
     );

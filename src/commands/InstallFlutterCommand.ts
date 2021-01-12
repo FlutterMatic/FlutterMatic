@@ -10,6 +10,7 @@ import {
   installFlutter,
 } from "../installer/installFlutter";
 import { error, info } from "../logger";
+import { getShell, setPath } from "../setPath";
 import { DashboardCommandHandler } from "./DashboardCommand";
 
 export class InstallFlutterCommand {
@@ -96,6 +97,23 @@ export class InstallFlutterCommand {
       );
       return;
     }
+
+    this.dashboardCommandHandler.updateOutputList(
+      info("Enabled web version in flutter. Adding Flutter to PATH")
+    );
+
+    const shell = (await getShell());
+    const {shellName} = shell;
+    if (shellName === "") {
+      this.dashboardCommandHandler.updateOutputList(error(
+        "Shell name not recognized"
+      ));
+      return;
+    }
+
+    const pathOutput = (await setPath(shell));
+    this.dashboardCommandHandler.updateOutputList(pathOutput);
+
     this.dashboardCommandHandler.updateOutputList(
       info("Hurray! Flutter is now installed on your system!!")
     );

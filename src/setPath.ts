@@ -23,7 +23,6 @@ export async function getShell(): Promise<Shell> {
         return { shellName: "" };
     }
 }
-
 export async function setPath(shell: Shell): Promise<Output> {
     // Set $PATH for windows and exit
     if (process.platform === 'win32') {
@@ -31,6 +30,13 @@ export async function setPath(shell: Shell): Promise<Output> {
     }
 
     const { shellName } = shell;
+
+    // Workaround to write to bash_profile on MacOS
+    if (process.platform === "darwin" && shellName === "BASH") {
+        return executeCommandAndReturnOutput("echo -e \"PATH=$HOME/.flutter-sdktest/bin/:$PATH\" >> ~/.bash_profile")
+    }
+
+    // Linux and MacOS (Other Shell(s))
     try {
         // Write to the necessary env config file
         switch (shellName) {

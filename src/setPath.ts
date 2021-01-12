@@ -1,8 +1,10 @@
 import { Output } from "./Output";
+import { homedir } from "os";
+import { join } from "path";
 import { exec } from "./runCommand";
 
 export interface Shell {
-    shellName: "BASH" | "FISH" | "ZSH" | ""
+    shellName: "BASH" | "ZSH" | ""
 }
 
 export async function getShell(): Promise<Shell> {
@@ -15,9 +17,6 @@ export async function getShell(): Promise<Shell> {
             return { shellName: "ZSH" };
         }
 
-        if (shellName.includes("fish")) {
-            return { shellName: "FISH" };
-        }
         return { shellName: "" };
 
     } catch (e: any) {
@@ -26,15 +25,19 @@ export async function getShell(): Promise<Shell> {
 }
 
 export async function setPath(shell: Shell): Promise<Output> {
+    // Set $PATH for windows and exit
+    if (process.platform === 'win32') {
+        return executeCommandAndReturnOutput((`SETX PATH "${join(homedir(), ".flutter-sdktest", "bin")}"`))
+    }
+
     const { shellName } = shell;
     try {
+        // Write to the necessary env config file
         switch (shellName) {
-            case "FISH":
-                return executeCommandAndReturnOutput("set -u fish_user_paths $HOME/.flutter-sdktest $fish_user_paths");
             case "ZSH":
-                return executeCommandAndReturnOutput("echo -e \"export PATH=$HOME/.flutter-sdktest:$PATH\" >> ~/.zshenv");
+                return executeCommandAndReturnOutput("echo -e \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.zshenv");
             case "BASH":
-                return executeCommandAndReturnOutput("echo -e \"export PATH=$HOME/.flutter-sdktest:$PATH\" >> ~/.bashrc");
+                return executeCommandAndReturnOutput("echo -e \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.bashrc");
             default:
                 return { error: `Could not set the path for ${shellName}`, success: false };
         }
@@ -44,13 +47,10 @@ export async function setPath(shell: Shell): Promise<Output> {
 }
 
 export async function executeCommandAndReturnOutput(command: string): Promise<Output> {
-    const fishSetPathOutput = await exec(command);
-    if (fishSetPathOutput.stdout) {
-        console.log(fishSetPathOutput.stdout);
-        
+    const commandOutput = await exec(command);
+    if (commandOutput.stdout) {
         return { info: "Set path", success: true };
     }
-    console.log(fishSetPathOutput.stderr);
-    
-    return { error: fishSetPathOutput.stderr, success: false };
+
+    return { error: commandOutput.stderr, success: false };
 }

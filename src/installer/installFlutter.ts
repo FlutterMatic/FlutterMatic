@@ -30,15 +30,7 @@ export async function gitClone(): Promise<Output> {
 
 export async function installFlutter(): Promise<Output> {
   try {
-    //Added path in the user variable(windows)
-    if (process.platform === 'win32') {
-      await exec(`SETX PATH "${join(homedir(), ".flutter-sdktest", "bin")}"`);
-      exec('flutter doctor'); //Important for initialisation of flutter
-    }
-    else {
-      //TODO add the path in the path 
-      await exec(`${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`);
-    }
+    await exec(`${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`);
     return { success: true, info: "Flutter installed successfully" };
   } catch (e: any) {
     return { success: false, error: e.message };

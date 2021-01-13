@@ -5,12 +5,12 @@ import { exec } from "../runCommand";
 
 export async function gitClone(): Promise<Output> {
   try {
-      await exec(
-        `git clone --depth 1 --branch beta https://github.com/flutter/flutter.git "${join(
-          homedir(),
-          ".flutter-sdktest"
-        )}"`
-      );
+    await exec(
+      `git clone --depth 1 --branch beta https://github.com/flutter/flutter.git "${join(
+        homedir(),
+        ".flutter-sdktest"
+      )}"`
+    );
     return { success: true, info: "Successfully cloned git repo" };
   } catch (e: any) {
     return {
@@ -27,8 +27,8 @@ export async function installFlutter(): Promise<Output> {
       await exec(`SETX PATH "${join(homedir(), ".flutter-sdktest", "bin")}"`);
       exec('flutter doctor'); //Important for initialisation of flutter
     }
-    else{
-    await exec(`${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`);
+    else {
+      await exec(`${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`);
     }
     return { success: true, info: "Flutter installed successfully" };
   } catch (e: any) {
@@ -43,7 +43,7 @@ export async function configureFlutter(): Promise<Output> {
       await exec(
         `flutter config --enable-web`
       );
-    } 
+    }
     else {
       await exec(
         `${join(

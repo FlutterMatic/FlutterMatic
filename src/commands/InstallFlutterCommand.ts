@@ -1,4 +1,4 @@
-import { homedir } from "os";
+import { homedir, platform } from "os";
 import { join } from "path";
 
 import { createInstallationDirectory } from "../createDirectory";
@@ -76,6 +76,22 @@ export class InstallFlutterCommand {
       )
     );
 
+    const shell = (await getShell());
+    const { shellName } = shell;
+    if (shellName === "" && process.platform != 'win32') {
+      this.dashboardCommandHandler.updateOutputList(error(
+        "Shell name not recognized"
+      ));
+      return;
+    }
+
+    const pathOutput = (await setPath(shell));
+    console.log('Path');
+    console.log(pathOutput);
+    console.log('Path');
+    this.dashboardCommandHandler.updateOutputList(pathOutput);
+
+
     const installFlutterOutput = await installFlutter();
     if (!installFlutterOutput.success) {
       this.dashboardCommandHandler.updateOutputList(
@@ -90,17 +106,6 @@ export class InstallFlutterCommand {
       )
     );
 
-    const shell = (await getShell());
-    const { shellName } = shell;
-    if (shellName === "") {
-      this.dashboardCommandHandler.updateOutputList(error(
-        "Shell name not recognized"
-      ));
-      return;
-    }
-
-    const pathOutput = (await setPath(shell));
-    this.dashboardCommandHandler.updateOutputList(pathOutput);
 
     this.dashboardCommandHandler.updateOutputList(info("Flutter added to PATH. Proceeding to enabling web sdk for flutter."));
 

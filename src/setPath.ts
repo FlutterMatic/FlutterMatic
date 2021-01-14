@@ -32,7 +32,7 @@ export async function getShell(): Promise<Shell> {
 export async function setPath(shell: Shell): Promise<Output> {
     // Set $PATH for windows and exit
     if (process.platform === 'win32') {
-        return executeCommandAndReturnOutput((`SETX PATH "${join(homedir(), ".flutter-sdktest", "bin")}"`));
+        return executeCommandAndReturnOutput((`SETX PATH "%PATH%;${join(homedir(), '.flutter-sdktest', 'bin')}"`));
     }
 
     const { shellName } = shell;

@@ -1,7 +1,7 @@
 import { Output } from "../Output";
 import { exec } from "../runCommand";
 
-import {gitCloneCommand,flutterCommand,configEnableWebFlutter} from "../constants"
+import { gitCloneCommand, flutterCommand, configEnableWebFlutter, flutterInitCommand } from "../constants"
 
 export async function gitClone(): Promise<Output> {
   try {
@@ -18,6 +18,7 @@ export async function gitClone(): Promise<Output> {
 export async function installFlutter(): Promise<Output> {
   try {
     await exec(flutterCommand);
+    await exec(flutterInitCommand);
     return { success: true, info: "Flutter installed successfully" };
   } catch (e: any) {
     return { success: false, error: e.message };
@@ -26,7 +27,7 @@ export async function installFlutter(): Promise<Output> {
 
 export async function configureFlutter(): Promise<Output> {
   try {
-      await exec(configEnableWebFlutter);
+    await exec(configEnableWebFlutter);
     return { success: true, info: "Flutter configuration complete!" };
   }
   catch (e: any) {

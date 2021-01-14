@@ -1,6 +1,10 @@
+import { join } from "path";
 import * as vscode from "vscode";
+import { checkForVSCodeCLI } from "../dependencies/checkForVSCode";
 
 import { createFlutterWebApp } from "../installer/installFlutter";
+import {error} from "../logger";
+import { exec } from "../runCommand";
 import { DashboardCommandHandler } from "./DashboardCommand";
 
 export class CreateFlutterWebProjectCommand {
@@ -38,7 +42,7 @@ export class CreateFlutterWebProjectCommand {
     }
 
     this.dashboardCommandHandler.updateOutputList({
-      info: folderPath,
+      info: `Using: ${folderPath}`,
       success: true,
     });
 
@@ -47,11 +51,11 @@ export class CreateFlutterWebProjectCommand {
     });
 
     if (!projectName) {
-      vscode.window.showErrorMessage("Can not be empty");
+      vscode.window.showErrorMessage("Project name can not be empty!");
       return;
     }
 
-    // Do a better regex based match later on
+    // TODO Do a better regex based match later on
     if (projectName?.includes("-")) {
       vscode.window.showErrorMessage(
         "Follow the dart package name guidelines!"
@@ -62,5 +66,13 @@ export class CreateFlutterWebProjectCommand {
     this.dashboardCommandHandler.updateOutputList(
       await createFlutterWebApp(folderPath, projectName)
     );
+
+    // Open project in a new window
+    const vsCodeCliOutput = await checkForVSCodeCLI();
+    if(vsCodeCliOutput.success){
+      await exec(`code ${join(folderPath,projectName)}`);
+    }
+
+    this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
   }
 }

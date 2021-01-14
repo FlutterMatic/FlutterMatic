@@ -26,6 +26,14 @@ export class InstallFlutterCommand {
       success: true,
     });
 
+    const flutterOutput = await checkIfFlutterIsInstalled();
+    if (flutterOutput.success) {
+      this.dashboardCommandHandler.updateOutputList(
+        error(flutterOutput.info!!)
+      );
+      return;
+    }
+
     this.dashboardCommandHandler.updateOutputList(
       info("Checking for dependencies")
     );
@@ -33,14 +41,6 @@ export class InstallFlutterCommand {
     const gitOutput = await checkForGit();
     if (!gitOutput.success) {
       this.dashboardCommandHandler.updateOutputList(error(gitOutput.error!!));
-      return;
-    }
-
-    const flutterOutput = await checkIfFlutterIsInstalled();
-    if (flutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(flutterOutput.info!!)
-      );
       return;
     }
 
@@ -86,7 +86,7 @@ export class InstallFlutterCommand {
 
     this.dashboardCommandHandler.updateOutputList(
       info(
-        "Flutter installation complete.Adding Flutter to PATH. "
+        "Flutter installation complete. Adding Flutter to PATH."
       )
     );
 
@@ -102,7 +102,7 @@ export class InstallFlutterCommand {
     const pathOutput = (await setPath(shell));
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 
-    this.dashboardCommandHandler.updateOutputList(info("Enableing web"));
+    this.dashboardCommandHandler.updateOutputList(info("Flutter added to PATH. Proceeding to enabling web sdk for flutter."));
 
     const configureFlutterOutput = await configureFlutter();
     if (!configureFlutterOutput.success) {
@@ -113,30 +113,13 @@ export class InstallFlutterCommand {
     }
 
     this.dashboardCommandHandler.updateOutputList(
-      info("Enabled web version in flutter. ")
+      info("Enabled web version in flutter.")
     );
 
 
     this.dashboardCommandHandler.updateOutputList(
-      info("Hurray! Flutter is now installed on your system!!")
+      info("Hurray! Flutter is now installed on your system!!\nNow you may click the \"Create web app button to create a new app!\"")
     );
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(
-        `1. Copy this: ${join(
-          homedir(),
-          ".flutter-sdktest",
-          "bin",
-          "flutter"
-        )} create starter_web`
-      )
-    );
-
-    this.dashboardCommandHandler.updateOutputList(
-      info(
-        `2. Copy this (after cd command):
-         ${join(homedir(), ".flutter-sdktest", "bin", "flutter")} run`
-      )
-    );
   }
 }

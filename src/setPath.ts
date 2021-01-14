@@ -3,6 +3,11 @@ import { homedir } from "os";
 import { join } from "path";
 import { exec } from "./runCommand";
 
+// Commands for setting path
+const bashrcCommand ="echo -e \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.bashrc ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH"
+const zshenvCOmmand = "echo -e \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.zshenv ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH"
+const bashProfileCommand = "echo -e \"PATH=$HOME/.flutter-sdktest/bin/:$PATH\" >> ~/.bash_profile ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH"
+
 export interface Shell {
     shellName: "BASH" | "ZSH" | ""
 }
@@ -23,6 +28,7 @@ export async function getShell(): Promise<Shell> {
         return { shellName: "" };
     }
 }
+
 export async function setPath(shell: Shell): Promise<Output> {
     // Set $PATH for windows and exit
     if (process.platform === 'win32') {
@@ -33,17 +39,17 @@ export async function setPath(shell: Shell): Promise<Output> {
 
     // Workaround to write to bash_profile on MacOS
     if (process.platform === "darwin" && shellName === "BASH") {
-        return executeCommandAndReturnOutput("echo -e \"PATH=$HOME/.flutter-sdktest/bin/:$PATH\" >> ~/.bash_profile")
+        return executeCommandAndReturnOutput(bashProfileCommand)
     }
 
     // Linux and MacOS (Other Shell(s))
     try {
-        // Write to the necessary env config file
+        // Write to the necessary env config file and export right now 
         switch (shellName) {
             case "ZSH":
-                return executeCommandAndReturnOutput("echo -e \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.zshenv");
+                return executeCommandAndReturnOutput(zshenvCOmmand);
             case "BASH":
-                return executeCommandAndReturnOutput("echo -e \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.bashrc");
+                return executeCommandAndReturnOutput(bashrcCommand);
             default:
                 return { error: `Could not set the path for ${shellName}`, success: false };
         }

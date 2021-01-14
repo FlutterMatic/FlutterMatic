@@ -86,20 +86,8 @@ export class InstallFlutterCommand {
 
     this.dashboardCommandHandler.updateOutputList(
       info(
-        "Flutter installation complete. Proceeding to enable web version in flutter sdk"
+        "Flutter installation complete.Adding Flutter to PATH. "
       )
-    );
-
-    const configureFlutterOutput = await configureFlutter();
-    if (!configureFlutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(configureFlutterOutput.error!!)
-      );
-      return;
-    }
-
-    this.dashboardCommandHandler.updateOutputList(
-      info("Enabled web version in flutter. Adding Flutter to PATH")
     );
 
     const shell = (await getShell());
@@ -113,6 +101,21 @@ export class InstallFlutterCommand {
 
     const pathOutput = (await setPath(shell));
     this.dashboardCommandHandler.updateOutputList(pathOutput);
+
+    this.dashboardCommandHandler.updateOutputList(info("Enableing web"))
+
+    const configureFlutterOutput = await configureFlutter();
+    if (!configureFlutterOutput.success) {
+      this.dashboardCommandHandler.updateOutputList(
+        error(configureFlutterOutput.error!!)
+      );
+      return;
+    }
+
+    this.dashboardCommandHandler.updateOutputList(
+      info("Enabled web version in flutter. ")
+    );
+
 
     this.dashboardCommandHandler.updateOutputList(
       info("Hurray! Flutter is now installed on your system!!")

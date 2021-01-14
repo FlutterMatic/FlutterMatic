@@ -22,14 +22,7 @@ export async function gitClone(): Promise<Output> {
 
 export async function installFlutter(): Promise<Output> {
   try {
-    if (process.platform == 'win32') {
-      //Added path
-      await exec(`SETX PATH "${join(homedir(), ".flutter-sdktest", "bin")}"`);
-      exec('flutter doctor'); //Important for initialisation of flutter
-    }
-    else {
-      await exec(`${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`);
-    }
+    await exec("flutter");
     return { success: true, info: "Flutter installed successfully" };
   } catch (e: any) {
     return { success: false, error: e.message };
@@ -39,21 +32,9 @@ export async function installFlutter(): Promise<Output> {
 export async function configureFlutter(): Promise<Output> {
   try {
 
-    if (process.platform == 'win32') {
       await exec(
         `flutter config --enable-web`
       );
-    }
-    else {
-      await exec(
-        `${join(
-          homedir(),
-          ".flutter-sdktest",
-          "bin",
-          "flutter"
-        )} config --enable-web`
-      );
-    }
     return { success: true, info: "Flutter configuration complete!" };
   }
   catch (e: any) {

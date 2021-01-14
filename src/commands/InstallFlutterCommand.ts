@@ -91,7 +91,7 @@ export class InstallFlutterCommand {
     );
 
     const shell = (await getShell());
-    const {shellName} = shell;
+    const { shellName } = shell;
     if (shellName === "") {
       this.dashboardCommandHandler.updateOutputList(error(
         "Shell name not recognized"
@@ -102,7 +102,7 @@ export class InstallFlutterCommand {
     const pathOutput = (await setPath(shell));
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 
-    this.dashboardCommandHandler.updateOutputList(info("Enableing web"))
+    this.dashboardCommandHandler.updateOutputList(info("Enableing web"));
 
     const configureFlutterOutput = await configureFlutter();
     if (!configureFlutterOutput.success) {

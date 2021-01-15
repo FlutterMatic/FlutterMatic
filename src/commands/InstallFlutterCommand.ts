@@ -78,7 +78,7 @@ export class InstallFlutterCommand {
 
     const shell = (await getShell());
     const { shellName } = shell;
-    if (shellName === "" && process.platform != 'win32') {
+    if (shellName === "" && process.platform !== 'win32') {
       this.dashboardCommandHandler.updateOutputList(error(
         "Shell name not recognized"
       ));

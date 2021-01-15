@@ -1,7 +1,7 @@
 import { Output } from "../Output";
 import { exec } from "../runCommand";
 
-import { gitCloneCommand, flutterCommand, configEnableWebFlutter, flutterInitCommand } from "../constants"
+import { gitCloneCommand, flutterCommand, configEnableWebFlutter, flutterInitCommand } from "../constants";
 
 export async function gitClone(): Promise<Output> {
   try {

@@ -86,9 +86,7 @@ export class InstallFlutterCommand {
     }
 
     const pathOutput = (await setPath(shell));
-    console.log('Path');
     console.log(pathOutput);
-    console.log('Path');
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 
 

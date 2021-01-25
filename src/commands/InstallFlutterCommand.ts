@@ -1,6 +1,3 @@
-import { homedir, platform } from "os";
-import { join } from "path";
-
 import { createInstallationDirectory } from "../createDirectory";
 import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
 import { checkForGit } from "../dependencies/checkForGit";
@@ -78,7 +75,7 @@ export class InstallFlutterCommand {
 
     const shell = (await getShell());
     const { shellName } = shell;
-    if (shellName === "" && process.platform != 'win32') {
+    if (shellName === "" && process.platform !== 'win32') {
       this.dashboardCommandHandler.updateOutputList(error(
         "Shell name not recognized"
       ));
@@ -86,9 +83,6 @@ export class InstallFlutterCommand {
     }
 
     const pathOutput = (await setPath(shell));
-    console.log('Path');
-    console.log(pathOutput);
-    console.log('Path');
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 
 

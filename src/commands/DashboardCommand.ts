@@ -12,7 +12,7 @@ import { Output } from "../Output";
 
 import { DashboardContent } from "../webview/dashboard";
 import { InstallFlutterCommand } from "./InstallFlutterCommand";
-import { CreateFlutterWebProjectCommand } from "./CreateFlutterWebProjectCOmmand";
+import { CreateFlutterWebProjectCommand } from "./CreateFlutterWebProjectCommand";
 
 export class DashboardCommandHandler {
   outputList: Output[] = [];
@@ -62,8 +62,8 @@ export async function dashboardCommand(context: ExtensionContext) {
       "dashboard",
       "Dashboard",
       ViewColumn.One, {
-        enableScripts: true,
-      }
+      enableScripts: true,
+    }
     );
 
     panel.webview.onDidReceiveMessage(

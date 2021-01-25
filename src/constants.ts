@@ -10,5 +10,5 @@ export const gitCloneCommand =
     ".flutter-sdktest"
   )}"`;
 
-export const flutterCommand = `flutter`;
-export const configEnableWebFlutter = `flutter config --enable-web`;
+export const flutterCommand = `${join(homedir(),".flutter-sdktest","bin","flutter")}`;
+export const configEnableWebFlutter = `${join(homedir(),".flutter-sdktest","bin","flutter")} config --enable-web`;

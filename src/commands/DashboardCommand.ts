@@ -13,19 +13,21 @@ import { Output } from "../Output";
 import { DashboardContent } from "../webview/dashboard";
 import { InstallFlutterCommand } from "./InstallFlutterCommand";
 import { CreateFlutterWebProjectCommand } from "./CreateFlutterWebProjectCommand";
+import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
 
 export class DashboardCommandHandler {
   outputList: Output[] = [];
   webViewPanel: WebviewPanel;
   dashboardContent: DashboardContent;
 
-  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri) {
+  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri, options: { flutter: boolean }) {
     this.webViewPanel = panel;
-    this.dashboardContent = new DashboardContent(styleURI, scriptURI);
+    this.dashboardContent = new DashboardContent(styleURI, scriptURI, options);
     this.webViewPanel.webview.html = this.dashboardContent.getDashboardContent(
       this.outputList
     );
   }
+
 
   updateOutputList(output: Output) {
     this.outputList.push(output);
@@ -87,10 +89,16 @@ export async function dashboardCommand(context: ExtensionContext) {
     const styleURI = getStyleURI(context, panel);
     const scriptURI = getScriptURI(context, panel);
 
+    const options = { flutter: false };
+
+    const flutterOutput = await checkIfFlutterIsInstalled();
+    if (flutterOutput.success) { options.flutter = true; }
+
     const dashboardCommandHandler = new DashboardCommandHandler(
       panel,
       styleURI,
-      scriptURI
+      scriptURI,
+      options
     );
   });
 }

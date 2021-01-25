@@ -115,11 +115,12 @@ export class InstallFlutterCommand {
     );
 
 
+    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: true });
+
     this.dashboardCommandHandler.updateOutputList(
       info("Hurray! Flutter is now installed on your system!!\nNow you may click the \"Create web app button to create a new app!\"")
     );
 
-    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: true });
 
   }
 }

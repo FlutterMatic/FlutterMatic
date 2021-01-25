@@ -17,6 +17,7 @@ export class DashboardContent {
   }
 
   getDashboardContent(outputs: Output[]) {
+    console.log(this.options)
     return `
     <html>
       <head>
@@ -25,12 +26,9 @@ export class DashboardContent {
       </head>
       <h1>Dashboard</h1>
 
-      ${this.options.flutter ? "" :
-        '<button id="install-flutter">Install Flutter</button>'}
+        <button ${this.options.flutter ? 'disabled' : ""} id="install-flutter">Install Flutter</button>
 
-      ${this.options.flutter ?
-        '<button id="create-web">Create web app</button>'
-        : ""}
+        <button ${this.options.flutter ? '' : "disabled"} id="create-web">Create web app</button>
     ${outputs
         .map((output) => {
           return `<b>${output.success ? "Success" : "Error"}</b><p>${output.success ? output.info!! : output.error!!

@@ -2,7 +2,7 @@
   "name": "flutter-matic",
   "displayName": "Flutter Matic",
   "description": "Easiest way to get flutter up and running",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "publisher": "FlutterMatic",
   "engines": {
     "vscode": "^1.52.0"
@@ -19,7 +19,7 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "icon": "src/media/logo.png",
+          "icon": "./media/logo.png",
           "id": "fluttermatic-sidebar",
           "title": "FlutterMatic"
         }

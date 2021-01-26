@@ -28,8 +28,17 @@ export class SideBarProvider implements WebviewViewProvider {
     }
 
     private _getHTML(webview: Webview) {
-        const styleUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "src", "media", "vscode.css"));
-        const scriptUri = webview.asWebviewUri(Uri.joinPath(this._extensionUri, "src", "media", "side.js"));
+        const styleUri = webview.asWebviewUri(
+            Uri.joinPath(
+                this._extensionUri,
+                "media",
+                "vscode.css"));
+
+        const scriptUri = webview.asWebviewUri(
+            Uri.joinPath(
+                this._extensionUri,
+                "media",
+                "side.js"));
 
         return `
             <html>

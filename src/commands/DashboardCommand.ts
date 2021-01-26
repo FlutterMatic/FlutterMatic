@@ -40,7 +40,6 @@ export class DashboardCommandHandler {
 function getScriptURI(context: ExtensionContext, panel: WebviewPanel) {
   const jsScriptPath = Uri.joinPath(
     context.extensionUri,
-    "src",
     "media",
     "main.js"
   );
@@ -50,7 +49,6 @@ function getScriptURI(context: ExtensionContext, panel: WebviewPanel) {
 function getStyleURI(context: ExtensionContext, panel: WebviewPanel) {
   const stylesPath = Uri.joinPath(
     context.extensionUri,
-    "src",
     "media",
     "vscode.css"
   );

@@ -46,6 +46,11 @@ export class CreateFlutterWebProjectCommand {
       success: true,
     });
 
+    this.dashboardCommandHandler.updateOutputList({
+        info: "The project name should not include spaces and numbers. It should conform to the Dart Package guidelines",
+        success:true
+    });
+
     const projectName = await vscode.window.showInputBox({
       value: "flutter_matic_starter_project",
     });

@@ -2,7 +2,7 @@
   "name": "flutter-matic",
   "displayName": "Flutter Matic",
   "description": "Easiest way to get flutter up and running",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "publisher": "FlutterMatic",
   "engines": {
     "vscode": "^1.52.0"

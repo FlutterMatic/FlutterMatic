@@ -10,7 +10,7 @@ import {
 import { EXTENSION_ID } from "../constants";
 import { Output } from "../Output";
 
-import { DashboardContent } from "../webview/dashboard";
+import { DashboardContent, DashboardContentOptions } from "../webview/dashboard";
 import { InstallFlutterCommand } from "./InstallFlutterCommand";
 import { CreateFlutterWebProjectCommand } from "./CreateFlutterWebProjectCommand";
 import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
@@ -20,7 +20,7 @@ export class DashboardCommandHandler {
   webViewPanel: WebviewPanel;
   dashboardContent: DashboardContent;
 
-  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri, options: { flutter: boolean }) {
+  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri, options: DashboardContentOptions) {
     this.webViewPanel = panel;
     this.dashboardContent = new DashboardContent(styleURI, scriptURI, options);
     this.webViewPanel.webview.html = this.dashboardContent.getDashboardContent(
@@ -89,10 +89,11 @@ export async function dashboardCommand(context: ExtensionContext) {
     const styleURI = getStyleURI(context, panel);
     const scriptURI = getScriptURI(context, panel);
 
-    const options = { flutter: false };
+    const options:DashboardContentOptions = { flutter: false,isFlutterInstalling:false };
 
     const flutterOutput = await checkIfFlutterIsInstalled();
-    if (flutterOutput.success) { options.flutter = true; }
+    if (flutterOutput.success) { options.flutter = true; options.isFlutterInstalling=false; }
+
 
     const dashboardCommandHandler = new DashboardCommandHandler(
       panel,

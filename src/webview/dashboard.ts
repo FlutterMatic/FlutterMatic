@@ -1,18 +1,21 @@
 import { Uri } from "vscode";
 import { Output } from "../Output";
 
+export interface DashboardContentOptions{ flutter: boolean, isFlutterInstalling: boolean };
+
+
 export class DashboardContent {
   styleUri: Uri;
   scriptUri: Uri;
-  options: { flutter: boolean };
+    options: DashboardContentOptions;
 
-  constructor(styleUri: Uri, scriptUri: Uri, options: { flutter: boolean }) {
+  constructor(styleUri: Uri, scriptUri: Uri, options: DashboardContentOptions) {
     this.styleUri = styleUri;
     this.scriptUri = scriptUri;
     this.options = options;
   }
 
-  updateOptions(options: { flutter: boolean }) {
+  updateOptions(options: DashboardContentOptions) {
     this.options = options;
   }
 
@@ -26,7 +29,7 @@ export class DashboardContent {
       </head>
       <h1>Dashboard</h1>
 
-        <button ${this.options.flutter ? 'disabled' : ""} id="install-flutter">Install Flutter</button>
+        <button ${this.options.flutter || this.options.isFlutterInstalling ? 'disabled' : ""} id="install-flutter">Install Flutter</button>
 
         <button ${this.options.flutter ? '' : "disabled"} id="create-web">Create web app</button>
     ${outputs

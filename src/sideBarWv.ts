@@ -38,8 +38,8 @@ export class SideBarProvider implements WebviewViewProvider {
             <meta http-equiv="content-security-policy" content="default-src self; img-src vscode-resource:; script-src vscode-resource: 'self' 'unsafe-inline'; style-src vscode-resource: 'self' 'unsafe-inline'; "/>
             </head>
 
-            <h1>Dashboard</h1>
-            <button id="dashboard-btn">dashboard</button>
+            <h1>Flutter Matic</h1>
+            <button id="dashboard-btn">Proceed to Install</button>
 
             <script src="${scriptUri}" defer></script>
 

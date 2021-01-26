@@ -71,8 +71,8 @@ export class CreateFlutterWebProjectCommand {
     const vsCodeCliOutput = await checkForVSCodeCLI();
     if (vsCodeCliOutput.success) {
       await exec(`code ${join(folderPath, projectName)}`);
+    } else {
+      this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
     }
-
-    this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
   }
 }

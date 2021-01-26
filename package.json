@@ -19,7 +19,7 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "icon": "src/media/logo.svg",
+          "icon": "src/media/logo.png",
           "id": "fluttermatic-sidebar",
           "title": "FlutterMatic"
         }

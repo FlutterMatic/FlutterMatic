@@ -1,8 +1,4 @@
-import { homedir, platform } from "os";
-import { join } from "path";
-
 import { createInstallationDirectory } from "../createDirectory";
-import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
 import { checkForGit } from "../dependencies/checkForGit";
 import {
   configureFlutter,

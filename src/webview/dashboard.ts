@@ -1,13 +1,13 @@
 import { Uri } from "vscode";
 import { Output } from "../Output";
 
-export interface DashboardContentOptions{ flutter: boolean, isFlutterInstalling: boolean };
+export interface DashboardContentOptions { flutter: boolean, isFlutterInstalling: boolean };
 
 
 export class DashboardContent {
   styleUri: Uri;
   scriptUri: Uri;
-    options: DashboardContentOptions;
+  options: DashboardContentOptions;
 
   constructor(styleUri: Uri, scriptUri: Uri, options: DashboardContentOptions) {
     this.styleUri = styleUri;
@@ -20,7 +20,7 @@ export class DashboardContent {
   }
 
   getDashboardContent(outputs: Output[]) {
-    console.log(this.options)
+    console.log(this.options);
     return `
     <html>
       <head>

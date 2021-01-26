@@ -89,10 +89,10 @@ export async function dashboardCommand(context: ExtensionContext) {
     const styleURI = getStyleURI(context, panel);
     const scriptURI = getScriptURI(context, panel);
 
-    const options:DashboardContentOptions = { flutter: false,isFlutterInstalling:false };
+    const options: DashboardContentOptions = { flutter: false, isFlutterInstalling: false };
 
     const flutterOutput = await checkIfFlutterIsInstalled();
-    if (flutterOutput.success) { options.flutter = true; options.isFlutterInstalling=false; }
+    if (flutterOutput.success) { options.flutter = true; options.isFlutterInstalling = false; }
 
 
     const dashboardCommandHandler = new DashboardCommandHandler(

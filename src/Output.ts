@@ -1,5 +1,5 @@
-export interface Output{
-    info?:string,
-    error?:string,
-    success:boolean
+export interface Output {
+    info?: string,
+    error?: string,
+    success: boolean
 }

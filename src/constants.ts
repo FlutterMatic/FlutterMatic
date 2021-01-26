@@ -10,6 +10,6 @@ export const gitCloneCommand =
     ".flutter-sdktest"
   )}"`;
 
-export const flutterCommand = `${join(homedir(),".flutter-sdktest","bin","flutter")}`;
-export const flutterInitCommand = `${join(homedir(),".flutter-sdktest","bin","flutter")} doctor`;
-export const configEnableWebFlutter = `${join(homedir(),".flutter-sdktest","bin","flutter")} config --enable-web`;
+export const flutterCommand = `${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`;
+export const flutterInitCommand = `${join(homedir(), ".flutter-sdktest", "bin", "flutter")} doctor`;
+export const configEnableWebFlutter = `${join(homedir(), ".flutter-sdktest", "bin", "flutter")} config --enable-web`;

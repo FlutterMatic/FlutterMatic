@@ -22,7 +22,7 @@ export class InstallFlutterCommand {
       success: true,
     });
 
-    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: false,isFlutterInstalling:true });
+    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: false, isFlutterInstalling: true });
 
     this.dashboardCommandHandler.updateOutputList(
       info("Checking for dependencies")
@@ -112,7 +112,7 @@ export class InstallFlutterCommand {
     );
 
 
-    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: true,isFlutterInstalling:false });
+    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: true, isFlutterInstalling: false });
 
     this.dashboardCommandHandler.updateOutputList(
       info("Hurray! Flutter is now installed on your system!!\nNow you may click the \"Create web app button to create a new app!\"")

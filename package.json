@@ -15,6 +15,24 @@
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "icon": "src/media/logo.svg",
+          "id": "fluttermatic-sidebar",
+          "title": "FlutterMatic"
+        }
+      ]
+    },
+    "views": {
+      "fluttermatic-sidebar": [
+        {
+          "type": "webview",
+          "id": "fluttermatic.side",
+          "name": "Quick Access"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "flutter-matic.dashboard",

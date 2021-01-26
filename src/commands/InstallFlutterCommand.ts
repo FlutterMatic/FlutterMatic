@@ -1,8 +1,4 @@
-import { homedir, platform } from "os";
-import { join } from "path";
-
 import { createInstallationDirectory } from "../createDirectory";
-import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
 import { checkForGit } from "../dependencies/checkForGit";
 import {
   configureFlutter,
@@ -26,13 +22,6 @@ export class InstallFlutterCommand {
       success: true,
     });
 
-    const flutterOutput = await checkIfFlutterIsInstalled();
-    if (flutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(flutterOutput.info!!)
-      );
-      return;
-    }
 
     this.dashboardCommandHandler.updateOutputList(
       info("Checking for dependencies")
@@ -122,9 +111,12 @@ export class InstallFlutterCommand {
     );
 
 
+    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: true });
+
     this.dashboardCommandHandler.updateOutputList(
       info("Hurray! Flutter is now installed on your system!!\nNow you may click the \"Create web app button to create a new app!\"")
     );
+
 
   }
 }

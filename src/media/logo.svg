@@ -7,9 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="210mm"
-   height="297mm"
-   viewBox="0 0 210 297"
+   width="200"
+   height="200"
+   viewBox="0 0 52.916665 52.916668"
    version="1.1"
    id="svg603"
    inkscape:version="1.0.1 (c497b03c, 2020-09-10)"
@@ -23,18 +23,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="386.3992"
-     inkscape:cy="548.92986"
+     inkscape:zoom="1.979899"
+     inkscape:cx="117.57184"
+     inkscape:cy="95.123222"
      inkscape:document-units="mm"
-     inkscape:current-layer="layer1"
+     inkscape:current-layer="g3992"
      inkscape:document-rotation="0"
      showgrid="false"
      inkscape:window-width="1252"
      inkscape:window-height="855"
      inkscape:window-x="0"
      inkscape:window-y="23"
-     inkscape:window-maximized="0" />
+     inkscape:window-maximized="0"
+     units="px" />
   <metadata
      id="metadata600">
     <rdf:RDF>
@@ -43,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -51,35 +52,28 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <rect
-       style="fill:#333333;stroke-width:0.2;paint-order:stroke fill markers"
-       id="rect605"
-       width="123.22024"
-       height="125.48809"
-       x="43.089287"
-       y="77.863091" />
     <g
        id="g3992"
-       transform="matrix(1.6552667,0,0,1.650795,209.97442,101.82689)"
-       style="stroke-width:0.60495"
-       inkscape:transform-center-x="-69.719617"
-       inkscape:transform-center-y="-0.41293826">
+       transform="matrix(6.3695852,0,0,6.387914,425.85983,-154.62198)"
+       style="stroke-width:0.156771"
+       inkscape:transform-center-x="-268.2861"
+       inkscape:transform-center-y="-1.5978963">
       <g
          id="g4005"
-         transform="matrix(0.20074273,-0.19954579,0.20004932,0.19885652,-50.480614,8.4734817)"
-         style="stroke:#cccccc;stroke-width:0.642297;stroke-miterlimit:4;stroke-dasharray:none">
+         transform="matrix(0.23879569,-0.23754083,0.23797083,0.23672032,-48.263366,3.7492301)"
+         style="stroke:#ffffff;stroke-width:0.326375;stroke-miterlimit:4;stroke-dasharray:none;fill:#ffffff">
         <path
-           style="fill:none;stroke:#cccccc;stroke-width:0.642297;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:0.326375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m -87.514648,11.77801 h 10.71541 l 3.48947,3.31781 h -14.20488 z"
            id="path3976"
            sodipodi:nodetypes="ccccc" />
         <path
-           style="fill:none;stroke:#cccccc;stroke-width:0.642297;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:0.326375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m -76.280946,17.237129 v 14.075237 l 3.279999,-3.237909 V 17.237129 Z"
            id="path3982"
            sodipodi:nodetypes="ccccc" />
         <path
-           style="fill:none;stroke:#cccccc;stroke-width:0.642297;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           style="fill:#ffffff;stroke:#ffffff;stroke-width:0.326375;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
            d="m -83.842637,26.413101 -3.363184,-3.404187 V 17.23713 h 8.783568 v 5.854481 l -3.279075,3.23791 -0.06296,-5.718964 h -2.099554 z"
            id="path4000" />
       </g>

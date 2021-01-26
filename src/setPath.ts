@@ -7,9 +7,10 @@ import { exec } from "./runCommand";
 const bashrcCommand = "echo \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.bashrc ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH";
 const zshenvCOmmand = "echo \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.zshenv ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH";
 const bashProfileCommand = "echo \"PATH=$HOME/.flutter-sdktest/bin/:$PATH\" >> ~/.bash_profile ; source $HOME/.bash_profile";
+const fishPathCommand = "echo \"set PATH $HOME/.flutter-sdktest/bin/ $PATH\" >> ~/.config/fish/config.fish";
 
 export interface Shell {
-    shellName: "BASH" | "ZSH" | ""
+    shellName: "BASH" | "ZSH" | "" | "FISH"
 }
 
 export async function getShell(): Promise<Shell> {
@@ -20,6 +21,9 @@ export async function getShell(): Promise<Shell> {
         }
         if (shellName.includes("zsh")) {
             return { shellName: "ZSH" };
+        }
+        if (shellName.includes("fish")) {
+            return { shellName: "FISH" };
         }
 
         return { shellName: "" };
@@ -50,6 +54,8 @@ export async function setPath(shell: Shell): Promise<Output> {
                 return executeCommandAndReturnOutput(zshenvCOmmand);
             case "BASH":
                 return executeCommandAndReturnOutput(bashrcCommand);
+            case "FISH":
+                return executeCommandAndReturnOutput(fishPathCommand);
             default:
                 return { error: `Could not set the path for ${shellName}`, success: false };
         }
@@ -59,10 +65,7 @@ export async function setPath(shell: Shell): Promise<Output> {
 }
 
 export async function executeCommandAndReturnOutput(command: string): Promise<Output> {
-    const commandOutput = await exec(command);
-    if (commandOutput.stdout) {
-        return { info: "Set path", success: true };
-    }
+    await exec(command);
 
-    return { error: commandOutput.stderr, success: false };
+    return { info: "Set path", success: true };
 }

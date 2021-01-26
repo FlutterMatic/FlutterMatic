@@ -1,6 +1,5 @@
 function main() {
   const vscode = acquireVsCodeApi();
-
   const installFlutterBtn = document.getElementById("install-flutter");
   const createWebAppBtn = document.getElementById("create-web");
 

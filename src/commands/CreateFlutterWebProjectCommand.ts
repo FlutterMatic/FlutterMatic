@@ -17,7 +17,12 @@ export class CreateFlutterWebProjectCommand {
     this.dashboardCommandHandler.updateOutputList({
       info: "Starting webapp creation",
       success: true,
-    });
+    },
+      {
+        buttonName: 'install-flutter',
+        isDisable: true
+      }
+    );
 
     const currentWorkspace = vscode.workspace.workspaceFolders;
 
@@ -44,7 +49,12 @@ export class CreateFlutterWebProjectCommand {
     this.dashboardCommandHandler.updateOutputList({
       info: `Using: ${folderPath}`,
       success: true,
-    });
+    },
+      {
+        buttonName: 'install-flutter',
+        isDisable: true
+      }
+    );
 
     const projectName = await vscode.window.showInputBox({
       value: "flutter_matic_starter_project",
@@ -62,9 +72,18 @@ export class CreateFlutterWebProjectCommand {
       );
       return;
     }
+    if (projectName?.includes(' ')) {
+      vscode.window.showErrorMessage(
+        "Follow the dart package name guidelines!\nYour project name must not have space inside.\n You've follow the dart naming convention"
+      );
+    }
 
     this.dashboardCommandHandler.updateOutputList(
-      await createFlutterWebApp(folderPath, projectName)
+      await createFlutterWebApp(folderPath, projectName.toLowerCase()), //Avoid error during the creation process
+      {
+        buttonName: 'install-flutter',
+        isDisable: true
+      }
     );
 
     // Open project in a new window
@@ -73,6 +92,10 @@ export class CreateFlutterWebProjectCommand {
       await exec(`code ${join(folderPath, projectName)}`);
     }
 
-    this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
+    this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`),
+      {
+        buttonName: 'install-flutter',
+        isDisable: true
+      });
   }
 }

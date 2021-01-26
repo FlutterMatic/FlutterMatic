@@ -15,13 +15,11 @@ body {
   background-color: var(--vscode-editor-background);
 }
 
-ol,
-ul {
+ol, ul {
   padding-left: var(--container-paddding);
 }
 
-body > *,
-form > * {
+body>*, form>* {
   margin-block-start: var(--input-margin-vertical);
   margin-block-end: var(--input-margin-vertical);
 }
@@ -34,8 +32,7 @@ a {
   color: var(--vscode-textLink-foreground);
 }
 
-a:hover,
-a:active {
+a:hover, a:active {
   color: var(--vscode-textLink-activeForeground);
 }
 
@@ -53,6 +50,10 @@ button {
   outline-offset: 2px !important;
   color: var(--vscode-button-foreground);
   background: var(--vscode-button-background);
+}
+
+button[disabled]:hover, button:disabled {
+  background-color: gray;
 }
 
 button:hover {
@@ -73,8 +74,7 @@ button.secondary:hover {
   background: var(--vscode-button-secondaryHoverBackground);
 }
 
-input:not([type="checkbox"]),
-textarea {
+input:not([type="checkbox"]), textarea {
   display: block;
   width: 100%;
   border: none;
@@ -85,7 +85,6 @@ textarea {
   background-color: var(--vscode-input-background);
 }
 
-input::placeholder,
-textarea::placeholder {
+input::placeholder, textarea::placeholder {
   color: var(--vscode-input-placeholderForeground);
 }

@@ -8,7 +8,7 @@ import {
 } from "vscode";
 
 import { EXTENSION_ID } from "../constants";
-import { Output } from "../Output";
+import { ButtonState, Output } from "../Output";
 
 import { DashboardContent } from "../webview/dashboard";
 import { InstallFlutterCommand } from "./InstallFlutterCommand";
@@ -19,18 +19,18 @@ export class DashboardCommandHandler {
   webViewPanel: WebviewPanel;
   dashboardContent: DashboardContent;
 
-  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri) {
+  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri, initialButtonState: ButtonState) {
     this.webViewPanel = panel;
     this.dashboardContent = new DashboardContent(styleURI, scriptURI);
     this.webViewPanel.webview.html = this.dashboardContent.getDashboardContent(
-      this.outputList
+      this.outputList, initialButtonState
     );
   }
 
-  updateOutputList(output: Output) {
+  updateOutputList(output: Output, buttonState: ButtonState) {
     this.outputList.push(output);
     this.webViewPanel!!.webview.html = this.dashboardContent.getDashboardContent(
-      this.outputList
+      this.outputList, buttonState
     );
   }
 }
@@ -90,7 +90,11 @@ export async function dashboardCommand(context: ExtensionContext) {
     const dashboardCommandHandler = new DashboardCommandHandler(
       panel,
       styleURI,
-      scriptURI
+      scriptURI,
+      {
+        buttonName: 'create-web',
+        isDisable: true,
+      }
     );
   });
 }

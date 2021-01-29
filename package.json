@@ -2,7 +2,7 @@
   "name": "flutter-matic",
   "displayName": "Flutter Matic",
   "description": "Easiest way to get flutter up and running",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "FlutterMatic",
   "icon": "media/extension_logo.png",
   "engines": {

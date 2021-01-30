@@ -47,7 +47,7 @@ export async function setPath(shell: Shell): Promise<Output> {
 
         return (exitCode === 0) ?
             { success: true, info: 'Set path'} :
-            { success: false, error: 'Could not set path' }
+            { success: false, error: 'Could not set path' };
     }
 
     const { shellName } = shell;

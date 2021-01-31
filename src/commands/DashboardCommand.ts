@@ -20,6 +20,13 @@ export class DashboardCommandHandler {
     );
   }
 
+  clearWebView() {
+    this.outputList = [];
+    this.webview.html = this.dashboardContent.getDashboardContent(
+      this.outputList
+    );
+  }
+
 
   updateOutputList(output: Output) {
     this.outputList.push(output);

@@ -79,5 +79,7 @@ export class CreateFlutterWebProjectCommand {
     } else {
       this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
     }
+
+    setTimeout(() => this.dashboardCommandHandler.clearWebView(), 1500);
   }
 }

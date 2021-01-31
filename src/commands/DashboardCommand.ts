@@ -3,6 +3,7 @@ import {
   ExtensionContext,
   Uri,
   ViewColumn,
+  Webview,
   WebviewPanel,
   window,
 } from "vscode";
@@ -17,13 +18,13 @@ import { checkIfFlutterIsInstalled } from "../dependencies/checkForFlutter";
 
 export class DashboardCommandHandler {
   outputList: Output[] = [];
-  webViewPanel: WebviewPanel;
+  webview: Webview;
   dashboardContent: DashboardContent;
 
-  constructor(panel: WebviewPanel, styleURI: Uri, scriptURI: Uri, options: DashboardContentOptions) {
-    this.webViewPanel = panel;
+  constructor(webview: Webview, styleURI: Uri, scriptURI: Uri, options: DashboardContentOptions) {
+    this.webview = webview;
     this.dashboardContent = new DashboardContent(styleURI, scriptURI, options);
-    this.webViewPanel.webview.html = this.dashboardContent.getDashboardContent(
+    this.webview.html = this.dashboardContent.getDashboardContent(
       this.outputList
     );
   }
@@ -31,7 +32,7 @@ export class DashboardCommandHandler {
 
   updateOutputList(output: Output) {
     this.outputList.push(output);
-    this.webViewPanel!!.webview.html = this.dashboardContent.getDashboardContent(
+    this.webview.html = this.dashboardContent.getDashboardContent(
       this.outputList
     );
   }
@@ -56,48 +57,48 @@ function getStyleURI(context: ExtensionContext, panel: WebviewPanel) {
   return styleURI;
 }
 
-export async function dashboardCommand(context: ExtensionContext) {
-  return commands.registerCommand(`${EXTENSION_ID}.dashboard`, async () => {
-    const panel = window.createWebviewPanel(
-      "dashboard",
-      "Dashboard",
-      ViewColumn.One, {
-      enableScripts: true,
-    }
-    );
+// export async function dashboardCommand(context: ExtensionContext) {
+  // return commands.registerCommand(`${EXTENSION_ID}.dashboard`, async () => {
+    // const panel = window.createWebviewPanel(
+      // "dashboard",
+      // "Dashboard",
+      // ViewColumn.One, {
+      // enableScripts: true,
+    // }
+    // );
+// 
+    // panel.webview.onDidReceiveMessage(
+      // async (message) => {
+        // switch (message.command) {
+          // case "install-flutter":
+            // await new InstallFlutterCommand(dashboardCommandHandler).run();
+            // break;
+// 
+          // case "create-web-app":
+            // await new CreateFlutterWebProjectCommand(
+              // dashboardCommandHandler
+            // ).run();
+            // break;
+        // }
+      // },
+      // undefined,
+      // context.subscriptions
+    // );
+// 
+    // const styleURI = getStyleURI(context, panel);
+    // const scriptURI = getScriptURI(context, panel);
+// 
+    // const options: DashboardContentOptions = { flutter: false, isFlutterInstalling: false };
+// 
+    // const flutterOutput = await checkIfFlutterIsInstalled();
+    // if (flutterOutput.success) { options.flutter = true; options.isFlutterInstalling = false; }
 
-    panel.webview.onDidReceiveMessage(
-      async (message) => {
-        switch (message.command) {
-          case "install-flutter":
-            await new InstallFlutterCommand(dashboardCommandHandler).run();
-            break;
 
-          case "create-web-app":
-            await new CreateFlutterWebProjectCommand(
-              dashboardCommandHandler
-            ).run();
-            break;
-        }
-      },
-      undefined,
-      context.subscriptions
-    );
-
-    const styleURI = getStyleURI(context, panel);
-    const scriptURI = getScriptURI(context, panel);
-
-    const options: DashboardContentOptions = { flutter: false, isFlutterInstalling: false };
-
-    const flutterOutput = await checkIfFlutterIsInstalled();
-    if (flutterOutput.success) { options.flutter = true; options.isFlutterInstalling = false; }
-
-
-    const dashboardCommandHandler = new DashboardCommandHandler(
-      panel,
-      styleURI,
-      scriptURI,
-      options
-    );
-  });
-}
+//     const dashboardCommandHandler = new DashboardCommandHandler(
+      // webview,
+      // styleURI,
+      // scriptURI,
+      // options
+    // );
+  // });
+// }

@@ -118,8 +118,5 @@ export class InstallFlutterCommand {
       info("Hurray! Flutter is now installed on your system!!\nNow you may click the \"Create web app button to create a new app!\"")
     );
 
-    setTimeout(() => this.dashboardCommandHandler.clearWebView(), 1500);
-
-
   }
 }

@@ -45,12 +45,12 @@ export class SideBarProvider implements WebviewViewProvider {
             switch (message.command) {
                 case "install-flutter":
                     await new InstallFlutterCommand(dashboardCommandHandler).run();
+                    setTimeout(() => dashboardCommandHandler.clearWebView(), 1500);
                     break;
 
                 case "create-web-app":
-                    await new CreateFlutterWebProjectCommand(
-                        dashboardCommandHandler
-                    ).run();
+                    await new CreateFlutterWebProjectCommand(dashboardCommandHandler).run();
+                    setTimeout(() => dashboardCommandHandler.clearWebView(), 1500);
                     break;
             }
 

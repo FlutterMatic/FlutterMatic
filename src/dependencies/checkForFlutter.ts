@@ -1,11 +1,12 @@
 import { Output } from "../Output";
 import { exec } from "../runCommand";
+import { flutterCheckCommand, flutterInstalled, flutterNotInstalled } from "../constants";
 
 export async function checkIfFlutterIsInstalled(): Promise<Output> {
   try {
-    await exec("flutter --version");
-    return { info: "Flutter is installed!", success: true };
+    await exec(flutterCheckCommand);
+    return { info: flutterInstalled, success: true };
   } catch (e: any) {
-    return { error: `Flutter is not installed!\n${e.message}`, success: false };
+    return { error: `${flutterNotInstalled}\n${e.message}`, success: false };
   }
 }

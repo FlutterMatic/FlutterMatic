@@ -13,3 +13,15 @@ export const gitCloneCommand =
 export const flutterCommand = `${join(homedir(), ".flutter-sdktest", "bin", "flutter")}`;
 export const flutterInitCommand = `${join(homedir(), ".flutter-sdktest", "bin", "flutter")} doctor`;
 export const configEnableWebFlutter = `${join(homedir(), ".flutter-sdktest", "bin", "flutter")} config --enable-web`;
+
+export const flutterCheckCommand = "flutter --version";
+export const flutterInstalled = "Flutter is installed!";
+export const flutterNotInstalled = "Flutter is not installed!";
+
+export const vscodeCheckCommand = "code --version";
+export const vscodeOnPath = "VSCode is on Path!";
+export const vscodeNotOnPath = "VSCode is not on Path!";
+
+export const gitCheckCommand = "git --version";
+export const gitInstalled = "Git is installed";
+export const gitNotInstalled = "Git is not installed";

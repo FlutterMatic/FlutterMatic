@@ -5,7 +5,7 @@ import { checkForVSCodeCLI } from "../dependencies/checkForVSCode";
 import { createFlutterWebApp } from "../installer/installFlutter";
 import { error } from "../logger";
 import { exec } from "../runCommand";
-import { DashboardCommandHandler } from "./DashboardCommand";
+import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHandler";
 
 export class CreateFlutterWebProjectCommand {
   dashboardCommandHandler: DashboardCommandHandler;

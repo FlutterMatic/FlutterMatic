@@ -7,7 +7,7 @@ import {
 } from "../installer/installFlutter";
 import { error, info } from "../logger";
 import { getShell, setPath } from "../setPath";
-import { DashboardCommandHandler } from "./DashboardCommand";
+import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHandler";
 
 export class InstallFlutterCommand {
   dashboardCommandHandler: DashboardCommandHandler;

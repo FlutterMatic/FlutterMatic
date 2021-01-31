@@ -5,7 +5,7 @@ import { exec } from "./runCommand";
 
 // Commands for setting path
 const bashrcCommand = "echo \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.bashrc ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH";
-const zshenvCOmmand = "echo \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.zshenv ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH";
+const zshenvCommand = "echo \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.zshenv ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH";
 const bashProfileCommand = "echo \"PATH=$HOME/.flutter-sdktest/bin/:$PATH\" >> ~/.bash_profile ; source $HOME/.bash_profile";
 const fishPathCommand = "echo \"set PATH $HOME/.flutter-sdktest/bin/ $PATH\" >> ~/.config/fish/config.fish";
 
@@ -51,7 +51,7 @@ export async function setPath(shell: Shell): Promise<Output> {
         // Write to the necessary env config file and export right now 
         switch (shellName) {
             case "ZSH":
-                return executeCommandAndReturnOutput(zshenvCOmmand);
+                return executeCommandAndReturnOutput(zshenvCommand);
             case "BASH":
                 return executeCommandAndReturnOutput(bashrcCommand);
             case "FISH":

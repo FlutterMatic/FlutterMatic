@@ -3,9 +3,11 @@ import {
   Webview,
 } from "vscode";
 
-import { Output } from "../Output";
+import { Output } from "../../Output";
 
-import { DashboardContent, DashboardContentOptions } from "../webview/dashboard";
+import { DashboardContent } from "./DashboardContent";
+import { DashboardContentOptions } from "./DashboardContentOptions";
+
 
 export class DashboardCommandHandler {
   outputList: Output[] = [];

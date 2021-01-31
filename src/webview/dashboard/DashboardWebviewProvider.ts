@@ -1,8 +1,8 @@
 import { CancellationToken, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext } from "vscode";
-import { CreateFlutterWebProjectCommand } from "./commands/CreateFlutterWebProjectCommand";
-import { DashboardCommandHandler } from "./commands/DashboardCommand";
-import { InstallFlutterCommand } from "./commands/InstallFlutterCommand";
-import { DashboardContentOptions } from "./webview/dashboard";
+import { CreateFlutterWebProjectCommand } from "../../commands/CreateFlutterWebProjectCommand";
+import { DashboardCommandHandler } from "./DashboardCommandHandler";
+import { InstallFlutterCommand } from "../../commands/InstallFlutterCommand";
+import { DashboardContentOptions } from "./DashboardContentOptions";
 
 function getScriptURI(webview: Webview, extensionUri: Uri) {
     return webview.asWebviewUri(Uri.joinPath(extensionUri, "media", "main.js"));
@@ -12,7 +12,7 @@ function getStyleURI(webview: Webview, extensionUri: Uri) {
     return webview.asWebviewUri(Uri.joinPath(extensionUri, "media", "vscode.css"));
 }
 
-export class SideBarProvider implements WebviewViewProvider {
+export class DashboardProvider implements WebviewViewProvider {
     public static readonly viewType = "fluttermatic.side";
     private options: DashboardContentOptions;
     private readonly extensionUri;

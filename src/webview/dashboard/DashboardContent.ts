@@ -1,7 +1,6 @@
 import { Uri } from "vscode";
-import { Output } from "../Output";
-
-export interface DashboardContentOptions { flutter: boolean, isFlutterInstalling: boolean };
+import { Output } from "../../Output";
+import { DashboardContentOptions } from "./DashboardContentOptions";
 
 
 export class DashboardContent {

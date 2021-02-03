@@ -9,7 +9,17 @@ import { exec } from "../runCommand";
 import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHandler";
 
 export class CreateFlutterWebProjectCommand {
+  
+  /*
+  * Command Class for creating a flutter web project
+  * - Open a folder picker or use the current workspace
+  * - Ask for project name (Default: `flutter_matic_starter_project`
+  * - Run `flutter create ${name}`
+  * - Open VSCode in the new project directory (Error if not in $PATH)
+  */
+
   dashboardCommandHandler: DashboardCommandHandler;
+
   constructor(dashboardCommandHandler: DashboardCommandHandler) {
     this.dashboardCommandHandler = dashboardCommandHandler;
   }
@@ -24,7 +34,7 @@ export class CreateFlutterWebProjectCommand {
 
     let folderPath = "";
 
-    // Show folder  picker if workspace does not exist
+    // Show folder picker if workspace does not exist
     if (!currentWorkspace) {
       const file = await vscode.window.showOpenDialog({
         canSelectFolders: true,
@@ -62,10 +72,11 @@ export class CreateFlutterWebProjectCommand {
     }
 
     // TODO Do a better regex based match later on
-    if (projectName?.includes("-")) {
+    if (projectName?.includes("-") || projectName?.includes(" ")) {
       vscode.window.showErrorMessage(
         "Follow the dart package name guidelines!"
       );
+      this.dashboardCommandHandler.updateOutputList(error(""));
       return;
     }
 

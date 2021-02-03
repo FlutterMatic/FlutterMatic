@@ -16,6 +16,17 @@ import {
 } from "../constants";
 
 export class InstallFlutterCommand {
+  
+  /*
+   * Command Class for installing flutter and setting it up
+   * - Check if all dependencies are present
+   * - Create installation directory
+   * - Clone flutter repo (beta branch)
+   * - install flutter (Run `flutter` and `flutter doctor`)
+   * - Enable flutter `web` feature
+   * - Set `$PATH` in supported shells
+   * */
+
   dashboardCommandHandler: DashboardCommandHandler;
 
   constructor(dashboardCommandHandler: DashboardCommandHandler) {
@@ -68,11 +79,11 @@ export class InstallFlutterCommand {
       );
       return;
     }
+
     this.dashboardCommandHandler.updateOutputList(
-      info(
-        startFlutterInstall
-      )
+      info(startFlutterInstall)
     );
+
     const shell = (await getShell());
     const { shellName } = shell;
     if (shellName === "" && process.platform !== 'win32') {
@@ -95,7 +106,6 @@ export class InstallFlutterCommand {
     }
 
     this.dashboardCommandHandler.updateOutputList(info(flutterInstallDone));
-
     this.dashboardCommandHandler.updateOutputList(info(enableWebSDK));
 
     const configureFlutterOutput = await configureFlutter();

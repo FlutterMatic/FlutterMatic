@@ -1,5 +1,6 @@
 import { join } from "path";
 import * as vscode from "vscode";
+import { openVsCode } from "../constants";
 import { checkForVSCodeCLI } from "../dependencies/checkForVSCode";
 
 import { createFlutterWebApp } from "../installer/installFlutter";
@@ -77,7 +78,7 @@ export class CreateFlutterWebProjectCommand {
     if (vsCodeCliOutput.success) {
       await exec(`code ${join(folderPath, projectName)}`);
     } else {
-      this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
+      this.dashboardCommandHandler.updateOutputList(error(openVsCode));
     }
   }
 }

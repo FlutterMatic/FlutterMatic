@@ -1,25 +1,24 @@
 import { Output } from "../Output";
 import { exec } from "../runCommand";
 
-import { gitCloneCommand, flutterCommand, configEnableWebFlutter, flutterInitCommand } from "../constants";
+import { flutterWebAppCreated, gitCloneSuccess, gitCloneError, flutterInstallSuccess, flutterConfigureSuccess, defaultProjectName, gitCloneCommand, flutterCommand, configEnableWebFlutter, flutterInitCommand } from "../constants";
 
 export async function gitClone(): Promise<Output> {
   try {
     await exec(gitCloneCommand);
-    return { success: true, info: "Successfully cloned git repo" };
+    return { success: true, info: gitCloneSuccess };
   } catch (e: any) {
     return {
       success: false,
-      error: `Error cloning flutter repo\n${e.message}`,
+      error: `${gitCloneError}\n${e.message}`,
     };
   }
 }
-
 export async function installFlutter(): Promise<Output> {
   try {
     await exec(flutterCommand);
     await exec(flutterInitCommand);
-    return { success: true, info: "Flutter installed successfully" };
+    return { success: true, info: flutterInstallSuccess };
   } catch (e: any) {
     return { success: false, error: e.message };
   }
@@ -28,7 +27,7 @@ export async function installFlutter(): Promise<Output> {
 export async function configureFlutter(): Promise<Output> {
   try {
     await exec(configEnableWebFlutter);
-    return { success: true, info: "Flutter configuration complete!" };
+    return { success: true, info: flutterConfigureSuccess };
   }
   catch (e: any) {
     return { success: false, error: e.message };
@@ -37,14 +36,14 @@ export async function configureFlutter(): Promise<Output> {
 
 export async function createFlutterWebApp(
   path: string,
-  name = "flutter_matic_starter_project"
+  name = defaultProjectName
 ): Promise<Output> {
   try {
     await exec(
       `flutter create ${name}`,
       { cwd: path }
     );
-    return { success: true, info: "Flutter WebApp created\n" };
+    return { success: true, info: flutterWebAppCreated };
   } catch (e: any) {
     return { success: false, error: e.message };
   }

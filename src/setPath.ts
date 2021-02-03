@@ -1,3 +1,5 @@
+import { Env, Target, SetOperationType } from 'windows-environment';
+
 import { Output } from "./Output";
 import { homedir } from "os";
 import { join } from "path";
@@ -36,7 +38,16 @@ export async function getShell(): Promise<Shell> {
 export async function setPath(shell: Shell): Promise<Output> {
     // Set $PATH for windows and exit
     if (process.platform === 'win32') {
-        return executeCommandAndReturnOutput((`SETX PATH "%PATH%;${join(homedir(), '.flutter-sdktest', 'bin')}"`));
+        const exitCode = Env.set({
+            target: Target.USER,
+            setOperationType: SetOperationType.APPEND,
+            name: 'PATH',
+            value: `${join(homedir(), '.flutter-sdktest', 'bin')}`
+        });
+
+        return (exitCode === 0) ?
+            { success: true, info: 'Set path'} :
+            { success: false, error: 'Could not set path' };
     }
 
     const { shellName } = shell;

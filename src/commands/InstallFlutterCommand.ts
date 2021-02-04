@@ -1,22 +1,22 @@
-import { createInstallationDirectory } from "../createDirectory";
-import { checkForGit } from "../dependencies/checkForGit";
+import { createInstallationDirectory } from '../createDirectory';
+import { checkForGit } from '../dependencies/checkForGit';
+import { configureFlutter, gitClone, installFlutter } from '../installer/installFlutter';
+import { error, info } from '../logger';
+import { getShell, setPath } from '../setPath';
+import { DashboardCommandHandler } from '../webview/dashboard/DashboardCommandHandler';
 import {
-  configureFlutter,
-  gitClone,
-  installFlutter,
-} from "../installer/installFlutter";
-import { error, info } from "../logger";
-import { getShell, setPath } from "../setPath";
-import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHandler";
-import {
-  checkForDependencies, startInstallProcess, flutterInstallDone,
-  flutterInstallComplete, enableWebSDK, startFlutterInstall, shellNameNotRecognized,
-  startGitClone, createInstallDir
-
-} from "../constants";
+  checkForDependencies,
+  startInstallProcess,
+  flutterInstallDone,
+  flutterInstallComplete,
+  enableWebSDK,
+  startFlutterInstall,
+  shellNameNotRecognized,
+  startGitClone,
+  createInstallDir,
+} from '../constants';
 
 export class InstallFlutterCommand {
-  
   /*
    * Command Class for installing flutter and setting it up
    * - Check if all dependencies are present
@@ -41,12 +41,10 @@ export class InstallFlutterCommand {
 
     this.dashboardCommandHandler.dashboardContent.updateOptions({
       flutter: false,
-      isFlutterInstalling: true
+      isFlutterInstalling: true,
     });
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(checkForDependencies)
-    );
+    this.dashboardCommandHandler.updateOutputList(info(checkForDependencies));
 
     const gitOutput = await checkForGit();
     if (!gitOutput.success) {
@@ -54,11 +52,7 @@ export class InstallFlutterCommand {
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(
-        createInstallDir
-      )
-    );
+    this.dashboardCommandHandler.updateOutputList(info(createInstallDir));
 
     const createInstallationDirectoryOutput = await createInstallationDirectory();
     if (!createInstallationDirectoryOutput.success) {
@@ -68,40 +62,29 @@ export class InstallFlutterCommand {
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(startGitClone)
-    );
+    this.dashboardCommandHandler.updateOutputList(info(startGitClone));
 
     const gitCloneOutput = await gitClone();
     if (!gitCloneOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(gitCloneOutput.error!!)
-      );
+      this.dashboardCommandHandler.updateOutputList(error(gitCloneOutput.error!!));
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(startFlutterInstall)
-    );
+    this.dashboardCommandHandler.updateOutputList(info(startFlutterInstall));
 
-    const shell = (await getShell());
+    const shell = await getShell();
     const { shellName } = shell;
-    if (shellName === "" && process.platform !== 'win32') {
-      this.dashboardCommandHandler.updateOutputList(error(
-        shellNameNotRecognized
-      ));
+    if (shellName === '' && process.platform !== 'win32') {
+      this.dashboardCommandHandler.updateOutputList(error(shellNameNotRecognized));
       return;
     }
 
-    const pathOutput = (await setPath(shell));
+    const pathOutput = await setPath(shell);
     this.dashboardCommandHandler.updateOutputList(pathOutput);
-
 
     const installFlutterOutput = await installFlutter();
     if (!installFlutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(installFlutterOutput.error!!)
-      );
+      this.dashboardCommandHandler.updateOutputList(error(installFlutterOutput.error!!));
       return;
     }
 
@@ -110,19 +93,15 @@ export class InstallFlutterCommand {
 
     const configureFlutterOutput = await configureFlutter();
     if (!configureFlutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(configureFlutterOutput.error!!)
-      );
+      this.dashboardCommandHandler.updateOutputList(error(configureFlutterOutput.error!!));
       return;
     }
 
     this.dashboardCommandHandler.dashboardContent.updateOptions({
       flutter: true,
-      isFlutterInstalling: false
+      isFlutterInstalling: false,
     });
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(flutterInstallComplete)
-    );
+    this.dashboardCommandHandler.updateOutputList(info(flutterInstallComplete));
   }
 }

@@ -1,11 +1,11 @@
 function main() {
   const vscode = acquireVsCodeApi();
 
-  const dashboardBtn = document.getElementById("dashboard-btn");
+  const dashboardBtn = document.getElementById('dashboard-btn');
 
-  dashboardBtn.addEventListener("click", () => {
+  dashboardBtn.addEventListener('click', () => {
     vscode.postMessage({
-      command: "dashboard",
+      command: 'dashboard',
     });
   });
 }

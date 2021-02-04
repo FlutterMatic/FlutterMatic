@@ -1,7 +1,18 @@
-import { Output } from "../Output";
-import { exec } from "../runCommand";
+import { Output } from '../Output';
+import { exec } from '../runCommand';
 
-import { flutterWebAppCreated, gitCloneSuccess, gitCloneError, flutterInstallSuccess, flutterConfigureSuccess, defaultProjectName, gitCloneCommand, flutterCommand, configEnableWebFlutter, flutterInitCommand } from "../constants";
+import {
+  flutterWebAppCreated,
+  gitCloneSuccess,
+  gitCloneError,
+  flutterInstallSuccess,
+  flutterConfigureSuccess,
+  defaultProjectName,
+  gitCloneCommand,
+  flutterCommand,
+  configEnableWebFlutter,
+  flutterInitCommand,
+} from '../constants';
 
 export async function gitClone(): Promise<Output> {
   try {
@@ -28,8 +39,7 @@ export async function configureFlutter(): Promise<Output> {
   try {
     await exec(configEnableWebFlutter);
     return { success: true, info: flutterConfigureSuccess };
-  }
-  catch (e: any) {
+  } catch (e: any) {
     return { success: false, error: e.message };
   }
 }
@@ -39,10 +49,7 @@ export async function createFlutterWebApp(
   name = defaultProjectName
 ): Promise<Output> {
   try {
-    await exec(
-      `flutter create ${name}`,
-      { cwd: path }
-    );
+    await exec(`flutter create ${name}`, { cwd: path });
     return { success: true, info: flutterWebAppCreated };
   } catch (e: any) {
     return { success: false, error: e.message };

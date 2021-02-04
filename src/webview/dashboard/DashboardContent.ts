@@ -1,7 +1,6 @@
-import { Uri } from "vscode";
-import { Output } from "../../Output";
-import { DashboardContentOptions } from "./DashboardContentOptions";
-
+import { Uri } from 'vscode';
+import { Output } from '../../Output';
+import { DashboardContentOptions } from './DashboardContentOptions';
 
 export class DashboardContent {
   styleUri: Uri;
@@ -28,15 +27,18 @@ export class DashboardContent {
       </head>
       <h1>Dashboard</h1>
 
-        <button ${this.options.flutter || this.options.isFlutterInstalling ? 'disabled' : ""} id="install-flutter">Install Flutter</button>
+        <button ${
+          this.options.flutter || this.options.isFlutterInstalling ? 'disabled' : ''
+        } id="install-flutter">Install Flutter</button>
 
-        <button ${this.options.flutter ? '' : "disabled"} id="create-web">Create web app</button>
+        <button ${this.options.flutter ? '' : 'disabled'} id="create-web">Create web app</button>
     ${outputs
-        .map((output) => {
-          return `<b>${output.success ? "Success" : "Error"}</b><p>${output.success ? output.info!! : output.error!!
-            }</p>`;
-        })
-        .join("")}
+      .map((output) => {
+        return `<b>${output.success ? 'Success' : 'Error'}</b><p>${
+          output.success ? output.info!! : output.error!!
+        }</p>`;
+      })
+      .join('')}
     <script src="${this.scriptUri}" defer></script>
     </html>
     `;

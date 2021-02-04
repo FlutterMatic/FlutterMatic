@@ -1,4 +1,4 @@
 export interface DashboardContentOptions {
-    flutter: boolean,
-    isFlutterInstalling: boolean
-};
+  flutter: boolean;
+  isFlutterInstalling: boolean;
+}

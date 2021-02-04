@@ -1,6 +1,6 @@
-import { gitCheckCommand, gitInstalled, gitNotInstalled } from "../constants";
-import { Output } from "../Output";
-import { exec } from "../runCommand";
+import { gitCheckCommand, gitInstalled, gitNotInstalled } from '../constants';
+import { Output } from '../Output';
+import { exec } from '../runCommand';
 
 export async function checkForGit(): Promise<Output> {
   try {

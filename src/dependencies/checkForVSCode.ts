@@ -1,6 +1,6 @@
-import { Output } from "../Output";
-import { exec } from "../runCommand";
-import { vscodeOnPath, vscodeNotOnPath, vscodeCheckCommand } from "../constants";
+import { Output } from '../Output';
+import { exec } from '../runCommand';
+import { vscodeOnPath, vscodeNotOnPath, vscodeCheckCommand } from '../constants';
 
 export async function checkForVSCodeCLI(): Promise<Output> {
   try {

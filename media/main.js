@@ -1,18 +1,18 @@
 function main() {
   const vscode = acquireVsCodeApi();
 
-  const installFlutterBtn = document.getElementById("install-flutter");
-  const createWebAppBtn = document.getElementById("create-web");
+  const installFlutterBtn = document.getElementById('install-flutter');
+  const createWebAppBtn = document.getElementById('create-web');
 
-  installFlutterBtn.addEventListener("click", () => {
+  installFlutterBtn.addEventListener('click', () => {
     vscode.postMessage({
-      command: "install-flutter",
+      command: 'install-flutter',
     });
   });
 
-  createWebAppBtn.addEventListener("click", () => {
+  createWebAppBtn.addEventListener('click', () => {
     vscode.postMessage({
-      command: "create-web-app",
+      command: 'create-web-app',
     });
   });
 }

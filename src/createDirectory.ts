@@ -1,16 +1,16 @@
-import { Output } from "./Output";
+import { Output } from './Output';
 
-import { mkdir as mkdirCall } from "fs";
-import { promisify } from "util";
-import { join } from "path";
-import { homedir } from "os";
+import { mkdir as mkdirCall } from 'fs';
+import { promisify } from 'util';
+import { join } from 'path';
+import { homedir } from 'os';
 
 const mkdir = promisify(mkdirCall);
 
 export async function createInstallationDirectory(): Promise<Output> {
   try {
-    await mkdir(join(homedir(), ".flutter-sdktest"));
-    return { success: true, info: "Installation directory created" };
+    await mkdir(join(homedir(), '.flutter-sdktest'));
+    return { success: true, info: 'Installation directory created' };
   } catch (e: any) {
     return {
       success: false,

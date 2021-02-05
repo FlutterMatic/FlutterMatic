@@ -1,10 +1,7 @@
-import { CancellationToken, ExtensionContext, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext } from "vscode";
 import { CreateFlutterWebProjectCommand } from "../../commands/CreateFlutterWebProjectCommand";
 import { DashboardCommandHandler } from "./DashboardCommandHandler";
 import { InstallFlutterCommand } from "../../commands/InstallFlutterCommand";
 import { DashboardContentOptions } from "./DashboardContentOptions";
-import { join } from "path";
-import { exec } from "../../runCommand";
 import {
   CancellationToken,
   Uri,
@@ -12,6 +9,7 @@ import {
   WebviewView,
   WebviewViewProvider,
   WebviewViewResolveContext,
+  ExtensionContext,
 } from 'vscode';
 
 function getScriptURI(webview: Webview, extensionUri: Uri) {

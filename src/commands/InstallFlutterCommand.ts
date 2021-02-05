@@ -1,16 +1,33 @@
 import { ExtensionContext } from "vscode";
 import { createInstallationDirectory } from "../createDirectory";
 import { checkForGit } from "../dependencies/checkForGit";
+import { configureFlutter, gitClone, installFlutter } from '../installer/installFlutter';
+import { error, info } from '../logger';
+import { getShell, setPath } from '../setPath';
+import { DashboardCommandHandler } from '../webview/dashboard/DashboardCommandHandler';
 import {
-  configureFlutter,
-  gitClone,
-  installFlutter,
-} from "../installer/installFlutter";
-import { error, info } from "../logger";
-import { getShell, setPath } from "../setPath";
-import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHandler";
+  checkForDependencies,
+  startInstallProcess,
+  flutterInstallDone,
+  flutterInstallComplete,
+  enableWebSDK,
+  startFlutterInstall,
+  shellNameNotRecognized,
+  startGitClone,
+  createInstallDir,
+} from '../constants';
 
 export class InstallFlutterCommand {
+  /*
+   * Command Class for installing flutter and setting it up
+   * - Check if all dependencies are present
+   * - Create installation directory
+   * - Clone flutter repo (beta branch)
+   * - install flutter (Run `flutter` and `flutter doctor`)
+   * - Enable flutter `web` feature
+   * - Set `$PATH` in supported shells
+   * */
+
   dashboardCommandHandler: DashboardCommandHandler;
   context:ExtensionContext;
 
@@ -21,15 +38,16 @@ export class InstallFlutterCommand {
 
   async run() {
     this.dashboardCommandHandler.updateOutputList({
-      info: "Starting installation process",
+      info: startInstallProcess,
       success: true,
     });
 
-    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: false, isFlutterInstalling: true });
+    this.dashboardCommandHandler.dashboardContent.updateOptions({
+      flutter: false,
+      isFlutterInstalling: true,
+    });
 
-    this.dashboardCommandHandler.updateOutputList(
-      info("Checking for dependencies")
-    );
+    this.dashboardCommandHandler.updateOutputList(info(checkForDependencies));
 
     const gitOutput = await checkForGit();
     if (!gitOutput.success) {
@@ -37,11 +55,7 @@ export class InstallFlutterCommand {
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(
-        "All dependencies present. Proceeding to create installation directory"
-      )
-    );
+    this.dashboardCommandHandler.updateOutputList(info(createInstallDir));
 
     const createInstallationDirectoryOutput = await createInstallationDirectory();
     if (!createInstallationDirectoryOutput.success) {
@@ -51,30 +65,20 @@ export class InstallFlutterCommand {
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info("Installation directory created. Proceeeding to clone the git repo")
-    );
+    this.dashboardCommandHandler.updateOutputList(info(startGitClone));
 
     const gitCloneOutput = await gitClone();
     if (!gitCloneOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(gitCloneOutput.error!!)
-      );
+      this.dashboardCommandHandler.updateOutputList(error(gitCloneOutput.error!!));
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(
-        "Git Clone successful. Proceeding to installing flutter. This may take a while."
-      )
-    );
+    this.dashboardCommandHandler.updateOutputList(info(startFlutterInstall));
 
-    const shell = (await getShell());
+    const shell = await getShell();
     const { shellName } = shell;
-    if (shellName === "" && process.platform !== 'win32') {
-      this.dashboardCommandHandler.updateOutputList(error(
-        "Shell name not recognized"
-      ));
+    if (shellName === '' && process.platform !== 'win32') {
+      this.dashboardCommandHandler.updateOutputList(error(shellNameNotRecognized));
       return;
     }
 
@@ -82,42 +86,26 @@ export class InstallFlutterCommand {
     console.log(pathOutput);
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 
-
     const installFlutterOutput = await installFlutter();
     if (!installFlutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(installFlutterOutput.error!!)
-      );
+      this.dashboardCommandHandler.updateOutputList(error(installFlutterOutput.error!!));
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info(
-        "Flutter installation complete. Adding Flutter to PATH."
-      )
-    );
-
-
-    this.dashboardCommandHandler.updateOutputList(info("Flutter added to PATH. Proceeding to enabling web sdk for flutter."));
+    this.dashboardCommandHandler.updateOutputList(info(flutterInstallDone));
+    this.dashboardCommandHandler.updateOutputList(info(enableWebSDK));
 
     const configureFlutterOutput = await configureFlutter();
     if (!configureFlutterOutput.success) {
-      this.dashboardCommandHandler.updateOutputList(
-        error(configureFlutterOutput.error!!)
-      );
+      this.dashboardCommandHandler.updateOutputList(error(configureFlutterOutput.error!!));
       return;
     }
 
-    this.dashboardCommandHandler.updateOutputList(
-      info("Enabled web version in flutter.")
-    );
+    this.dashboardCommandHandler.dashboardContent.updateOptions({
+      flutter: true,
+      isFlutterInstalling: false,
+    });
 
-
-    this.dashboardCommandHandler.dashboardContent.updateOptions({ flutter: true, isFlutterInstalling: false });
-
-    this.dashboardCommandHandler.updateOutputList(
-      info("Hurray! Flutter is now installed on your system!!\nNow you may click the \"Create web app button to create a new app!\"")
-    );
-
+    this.dashboardCommandHandler.updateOutputList(info(flutterInstallComplete));
   }
 }

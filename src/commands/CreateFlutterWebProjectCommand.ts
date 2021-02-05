@@ -1,29 +1,45 @@
-import { join } from "path";
-import * as vscode from "vscode";
-import { checkForVSCodeCLI } from "../dependencies/checkForVSCode";
+import { join } from 'path';
+import * as vscode from 'vscode';
+import {
+  defaultProjectName,
+  startWebApp,
+  pickOneFolder,
+  dartPackageFormat,
+  projectNameEmpty,
+  openVsCode,
+} from '../constants';
+import { checkForVSCodeCLI } from '../dependencies/checkForVSCode';
 
-import { createFlutterWebApp } from "../installer/installFlutter";
-import { error } from "../logger";
-import { exec } from "../runCommand";
-import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHandler";
+import { createFlutterWebApp } from '../installer/installFlutter';
+import { error } from '../logger';
+import { exec } from '../runCommand';
+import { DashboardCommandHandler } from '../webview/dashboard/DashboardCommandHandler';
 
 export class CreateFlutterWebProjectCommand {
+  /*
+   * Command Class for creating a flutter web project
+   * - Open a folder picker or use the current workspace
+   * - Ask for project name (Default: `flutter_matic_starter_project`
+   * - Run `flutter create ${name}`
+   * - Open VSCode in the new project directory (Error if not in $PATH)
+   */
+
   dashboardCommandHandler: DashboardCommandHandler;
+
   constructor(dashboardCommandHandler: DashboardCommandHandler) {
     this.dashboardCommandHandler = dashboardCommandHandler;
   }
-
   async run() {
     this.dashboardCommandHandler.updateOutputList({
-      info: "Starting webapp creation",
+      info: startWebApp,
       success: true,
     });
 
     const currentWorkspace = vscode.workspace.workspaceFolders;
 
-    let folderPath = "";
+    let folderPath = '';
 
-    // Show folder  picker if workspace does not exist
+    // Show folder picker if workspace does not exist
     if (!currentWorkspace) {
       const file = await vscode.window.showOpenDialog({
         canSelectFolders: true,
@@ -31,9 +47,7 @@ export class CreateFlutterWebProjectCommand {
         canSelectMany: false,
       });
       if (!file) {
-        vscode.window.showErrorMessage(
-          "You need to pick one folder to continue or be in a workspace"
-        );
+        vscode.window.showErrorMessage(pickOneFolder);
         return;
       }
       folderPath = file[0].fsPath;
@@ -45,26 +59,24 @@ export class CreateFlutterWebProjectCommand {
       info: `Using: ${folderPath}`,
       success: true,
     });
-
     this.dashboardCommandHandler.updateOutputList({
-      info: "The project name should not include spaces and numbers. It should conform to the Dart Package guidelines",
-      success: true
+      info: dartPackageFormat,
+      success: true,
     });
 
     const projectName = await vscode.window.showInputBox({
-      value: "flutter_matic_starter_project",
+      value: defaultProjectName,
     });
 
     if (!projectName) {
-      vscode.window.showErrorMessage("Project name can not be empty!");
+      vscode.window.showErrorMessage(projectNameEmpty);
       return;
     }
 
     // TODO Do a better regex based match later on
-    if (projectName?.includes("-")) {
-      vscode.window.showErrorMessage(
-        "Follow the dart package name guidelines!"
-      );
+    if (projectName?.includes('-') || projectName?.includes(' ')) {
+      vscode.window.showErrorMessage(dartPackageFormat);
+      this.dashboardCommandHandler.updateOutputList(error(''));
       return;
     }
 
@@ -77,7 +89,7 @@ export class CreateFlutterWebProjectCommand {
     if (vsCodeCliOutput.success) {
       await exec(`code ${join(folderPath, projectName)}`);
     } else {
-      this.dashboardCommandHandler.updateOutputList(error(`Please open VSCode in the directory to start coding. We could not open vscode for you as you do not have it on path!`));
+      this.dashboardCommandHandler.updateOutputList(error(openVsCode));
     }
   }
 }

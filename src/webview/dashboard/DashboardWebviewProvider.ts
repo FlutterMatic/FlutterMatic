@@ -5,13 +5,21 @@ import { InstallFlutterCommand } from "../../commands/InstallFlutterCommand";
 import { DashboardContentOptions } from "./DashboardContentOptions";
 import { join } from "path";
 import { exec } from "../../runCommand";
+import {
+  CancellationToken,
+  Uri,
+  Webview,
+  WebviewView,
+  WebviewViewProvider,
+  WebviewViewResolveContext,
+} from 'vscode';
 
 function getScriptURI(webview: Webview, extensionUri: Uri) {
-    return webview.asWebviewUri(Uri.joinPath(extensionUri, "media", "main.js"));
+  return webview.asWebviewUri(Uri.joinPath(extensionUri, 'media', 'main.js'));
 }
 
 function getStyleURI(webview: Webview, extensionUri: Uri) {
-    return webview.asWebviewUri(Uri.joinPath(extensionUri, "media", "vscode.css"));
+  return webview.asWebviewUri(Uri.joinPath(extensionUri, 'media', 'vscode.css'));
 }
 
 export class DashboardProvider implements WebviewViewProvider {
@@ -62,5 +70,4 @@ export class DashboardProvider implements WebviewViewProvider {
 
     }
 
-}
-
+  }

@@ -1,6 +1,6 @@
-import { Output } from "../Output";
-import { exec } from "../runCommand";
-import { flutterCheckCommand, flutterInstalled, flutterNotInstalled } from "../constants";
+import { Output } from '../Output';
+import { exec } from '../runCommand';
+import { flutterCheckCommand, flutterInstalled, flutterNotInstalled } from '../constants';
 
 export async function checkIfFlutterIsInstalled(): Promise<Output> {
   try {

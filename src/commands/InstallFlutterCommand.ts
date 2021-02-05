@@ -1,3 +1,4 @@
+import { ExtensionContext } from "vscode";
 import { createInstallationDirectory } from "../createDirectory";
 import { checkForGit } from "../dependencies/checkForGit";
 import {
@@ -11,9 +12,11 @@ import { DashboardCommandHandler } from "../webview/dashboard/DashboardCommandHa
 
 export class InstallFlutterCommand {
   dashboardCommandHandler: DashboardCommandHandler;
+  context:ExtensionContext;
 
-  constructor(dashboardCommandHandler: DashboardCommandHandler) {
+  constructor(dashboardCommandHandler: DashboardCommandHandler,context:ExtensionContext) {
     this.dashboardCommandHandler = dashboardCommandHandler;
+    this.context = context;
   }
 
   async run() {
@@ -75,7 +78,7 @@ export class InstallFlutterCommand {
       return;
     }
 
-    const pathOutput = (await setPath(shell));
+    const pathOutput = (await setPath(shell,this.context));
     console.log(pathOutput);
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 

@@ -1,9 +1,7 @@
-import { Env, Target, SetOperationType } from 'windows-environment';
-
 import { Output } from "./Output";
-import { homedir } from "os";
 import { join } from "path";
 import { exec } from "./runCommand";
+import { ExtensionContext } from 'vscode';
 
 // Commands for setting path
 const bashrcCommand = "echo \"export PATH=$HOME/.flutter-sdktest/bin:$PATH\" >> ~/.bashrc ; export PATH=$HOME/.flutter-sdktest/bin/:$PATH";
@@ -35,19 +33,12 @@ export async function getShell(): Promise<Shell> {
     }
 }
 
-export async function setPath(shell: Shell): Promise<Output> {
+export async function setPath(shell: Shell,ec:ExtensionContext): Promise<Output> {
     // Set $PATH for windows and exit
     if (process.platform === 'win32') {
-        const exitCode = 0
-
-/*C:\Users\user\fluttermatic\FlutterMatic>echo %path%
-C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\dotnet\;F:\IDE\Go\bin;C:\Program Files\nodejs\;C:\Program Files\PostgreSQL\12\lib;C:\Program Files (x86)\Git\cmd;C:\ProgramData\chocolatey\bin;F:\Anaconda3;F:\Anaconda3\Library\mingw-w64\bin;F:\Anaconda3\Library\usr\bin;F:\Anaconda3\Library\bin;F:\Anaconda3\Scripts;F:\Python 3.7\Scripts\;F:\Python 3.7\;C:\Users\user\AppData\Local\Microsoft\WindowsApps;F:\Python3.7;C:\Program Files\heroku\bin;F:\IDE\Microsoft VS Code\bin;C:\Users\user\go\bin;C:\Users\user\AppData\Roaming\npm;F:\Git\bin\git.exe;C:\Program Files\PostgreSQL\12\lib;C:\Program Files\PostgreSQL\12\bin;C:\Program Files\PostgreSQL\12;F:\Git;F:\IDE\Microsoft VS Code\_;C:\Program Files\MongoDB\Server\4.2\bin;C:\Users\user\.deno\bin;C:\Users\user\AppData\Local\GitHubDesktop\bin;C:\Users\user\Downloads\chromedriver_win32;;C:\Program Files\JetBrains\IntelliJ IDEA Community Edition 2020.2.3\bin;*/
-
-        exec(`setx /M path "%path%;${join(homedir(),".flutter-sdktest","bin")}`)
-
-        return (exitCode === 0) ?
-            { success: true, info: 'Set path'} :
-            { success: false, error: 'Could not set path' };
+        const templatevbs = ec.asAbsolutePath(join("media","path.vbs"));
+        await exec(templatevbs);
+        return {success:true,info:"Set Path"};
     }
 
     const { shellName } = shell;

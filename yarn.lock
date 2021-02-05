@@ -1383,11 +1383,6 @@ wide-align@1.1.3:
   dependencies:
     string-width "^1.0.2 || 2"
 
-windows-environment@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/windows-environment/-/windows-environment-1.0.2.tgz#15f1a6949621e6a903c731ab3da46b30112ad44f"
-  integrity sha512-G6Tw8aq5oCn7thTgqQuSEYBeOBE6T1D1Gv8Zkmlo4S5Qu0h4gEI/k+oXV9t0KlMbPT0R+3eYfuuSlVWnurvLyQ==
-
 word-wrap@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"

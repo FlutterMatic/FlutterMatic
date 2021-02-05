@@ -1,8 +1,10 @@
-import { CancellationToken, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext } from "vscode";
+import { CancellationToken, ExtensionContext, Uri, Webview, WebviewView, WebviewViewProvider, WebviewViewResolveContext } from "vscode";
 import { CreateFlutterWebProjectCommand } from "../../commands/CreateFlutterWebProjectCommand";
 import { DashboardCommandHandler } from "./DashboardCommandHandler";
 import { InstallFlutterCommand } from "../../commands/InstallFlutterCommand";
 import { DashboardContentOptions } from "./DashboardContentOptions";
+import { join } from "path";
+import { exec } from "../../runCommand";
 
 function getScriptURI(webview: Webview, extensionUri: Uri) {
     return webview.asWebviewUri(Uri.joinPath(extensionUri, "media", "main.js"));
@@ -16,10 +18,13 @@ export class DashboardProvider implements WebviewViewProvider {
     public static readonly viewType = "fluttermatic.side";
     private options: DashboardContentOptions;
     private readonly extensionUri;
+    private readonly extensionContext;
 
     constructor(
-        private readonly _extensionUri: Uri) {
-        this.extensionUri = _extensionUri;
+        _extensionContext: ExtensionContext
+        ) {
+        this.extensionUri = _extensionContext.extensionUri;
+        this.extensionContext = _extensionContext;
         this.options = { flutter: false, isFlutterInstalling: false };
     }
 
@@ -33,18 +38,17 @@ export class DashboardProvider implements WebviewViewProvider {
             getStyleURI(webview, this.extensionUri),
             getScriptURI(webview, this.extensionUri),
             this.options);
-
         webviewView.webview.options = {
             enableScripts: true,
             localResourceRoots: [
-                this._extensionUri
+                this.extensionUri
             ]
         };
 
         webviewView.webview.onDidReceiveMessage(async message => {
             switch (message.command) {
                 case "install-flutter":
-                    await new InstallFlutterCommand(dashboardCommandHandler).run();
+                    await new InstallFlutterCommand(dashboardCommandHandler,this.extensionContext).run();
                     setTimeout(() => dashboardCommandHandler.clearWebView(), 1500);
                     break;
 

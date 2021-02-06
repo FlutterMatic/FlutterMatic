@@ -1,6 +1,6 @@
-import { Output } from "./Output";
-import { join } from "path";
-import { exec } from "./runCommand";
+import { Output } from './Output';
+import { join } from 'path';
+import { exec } from './runCommand';
 import { ExtensionContext } from 'vscode';
 
 // Commands for setting path
@@ -36,13 +36,13 @@ export async function getShell(): Promise<Shell> {
   }
 }
 
-export async function setPath(shell: Shell,ec:ExtensionContext): Promise<Output> {
-    // Set $PATH for windows and exit
-    if (process.platform === 'win32') {
-        const templatevbs = ec.asAbsolutePath(join("media","path.vbs"));
-        await exec(templatevbs);
-        return {success:true,info:"Set Path"};
-    }
+export async function setPath(shell: Shell, ec: ExtensionContext): Promise<Output> {
+  // Set $PATH for windows and exit
+  if (process.platform === 'win32') {
+    const templatevbs = ec.asAbsolutePath(join('media', 'path.vbs'));
+    await exec(templatevbs);
+    return { success: true, info: 'Set Path' };
+  }
 
   const { shellName } = shell;
 

@@ -1,6 +1,6 @@
-import { ExtensionContext } from "vscode";
-import { createInstallationDirectory } from "../createDirectory";
-import { checkForGit } from "../dependencies/checkForGit";
+import { ExtensionContext } from 'vscode';
+import { createInstallationDirectory } from '../createDirectory';
+import { checkForGit } from '../dependencies/checkForGit';
 import { configureFlutter, gitClone, installFlutter } from '../installer/installFlutter';
 import { error, info } from '../logger';
 import { getShell, setPath } from '../setPath';
@@ -29,9 +29,9 @@ export class InstallFlutterCommand {
    * */
 
   dashboardCommandHandler: DashboardCommandHandler;
-  context:ExtensionContext;
+  context: ExtensionContext;
 
-  constructor(dashboardCommandHandler: DashboardCommandHandler,context:ExtensionContext) {
+  constructor(dashboardCommandHandler: DashboardCommandHandler, context: ExtensionContext) {
     this.dashboardCommandHandler = dashboardCommandHandler;
     this.context = context;
   }
@@ -82,7 +82,7 @@ export class InstallFlutterCommand {
       return;
     }
 
-    const pathOutput = (await setPath(shell,this.context));
+    const pathOutput = await setPath(shell, this.context);
     console.log(pathOutput);
     this.dashboardCommandHandler.updateOutputList(pathOutput);
 

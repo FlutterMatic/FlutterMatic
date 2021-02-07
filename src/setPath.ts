@@ -1,7 +1,7 @@
 import { Output } from './Output';
-import { homedir } from 'os';
 import { join } from 'path';
 import { exec } from './runCommand';
+import { ExtensionContext } from 'vscode';
 
 // Commands for setting path
 const bashrcCommand =
@@ -36,12 +36,12 @@ export async function getShell(): Promise<Shell> {
   }
 }
 
-export async function setPath(shell: Shell): Promise<Output> {
+export async function setPath(shell: Shell, ec: ExtensionContext): Promise<Output> {
   // Set $PATH for windows and exit
   if (process.platform === 'win32') {
-    return executeCommandAndReturnOutput(
-      `SETX PATH "%PATH%;${join(homedir(), '.flutter-sdktest', 'bin')}"`
-    );
+    const templatevbs = ec.asAbsolutePath(join('media', 'path.vbs'));
+    await exec(templatevbs);
+    return { success: true, info: 'Set Path' };
   }
 
   const { shellName } = shell;
